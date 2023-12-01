@@ -18,9 +18,9 @@ This repository contains instructions on how to gather telemetry from Dynamics 3
 
 | Area  | Description  | Take me there (use CTRL+click to open in a new tab) |
 | ------ | ------ | ------ |
+| SampleXppExtensions | Root folder for the Dynamics 365 X++ artifacts providing sample source code emitting telemetry | [Sample Xpp Extensions ](SampleXppExtensions) |
 | Kusto queries | A repository of queries to consult Application Insights telemetry | [Kusto queries](KustoQueries) |
 | Dashboards\Azure Data Explorer | Making interactive dashboards in Azure Data Explorer with data from Azure Application Insights | [Azure Data Explorer dashboards](Dashboards/AzureDataExplorer/) |
-| SampleXppExtensions | Root folder for the Dynamics 365 X++ artifacts providing sample source code emitting telemetry | [Sample Xpp Extensions ](SampleXppExtensions) |
 
 ## Contributing
 
