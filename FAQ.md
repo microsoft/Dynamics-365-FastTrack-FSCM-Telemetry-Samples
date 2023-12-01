@@ -1,5 +1,9 @@
 # Telemetry Frequently Asked Questions
 
+# What is telemetry?
+Microsoft Power Platform and Dynamics 365 products continuously emit telemetry about events that happen in the customer environment. 
+This telemetry can be useful for troubleshooting an issue or to gain insights into what is happening in the application.
+
 ## What does it cost?
 Application Insights is billed based on the volume of telemetry data that your application sends. Currently, the first 5 GB of data per month is free. Regarding data retention, every GB of data ingested can be retained at no charge for up to first 90 days.
 
