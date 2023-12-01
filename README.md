@@ -1,14 +1,26 @@
-# Project
+# Dynamics-365-FastTrack-FSCM-Telemetry-Samples
+Sample extensions for Dynamics 365 Finance and Supply Chain Management to bootstrap teams wanting to start emitting telemetry for SCM related processes.
 
-> This repo has been populated by an initial template to help get you started. Please
-> make sure to update the content to build a great experience for community-building.
+# Finance and Supply Chain Management Monitoring and Telemetry using Application Insights
+The monitoring and telemetry feature in finance and operations apps is a direct, point-to-point integration between an instance of a 
+finance and operations app and the target Application Insights destination. This feature lets developers and admins triage and resolve 
+application issues in near-real time. The telemetry that's generated isn't collected by Microsoft for support or other operational reporting. 
+Instead, the data is customer owned and customer driven.
 
-As the maintainer of this project, please make a few updates:
+Get started by following the documentation on MSLearn: [Monitoring and telemetry using Application Insights](https://learn.microsoft.com/en-us/dynamics365/fin-ops-core/dev-itpro/sysadmin/monitoring-and-telemetry-appinsights)
 
-- Improving this README.MD file to provide a great experience
-- Updating SUPPORT.MD with content about this project's support experience
-- Understanding the security reporting process in SECURITY.MD
-- Remove this section from the README
+For specific guidelines on Warehouse Management telemetry, documentation can be found on MSLearn:
+- [Enable warehousing telemetry with Application Insights](https://learn.microsoft.com/en-us/dynamics365/supply-chain/warehousing/application-insights-warehousing)
+- [Monitor Warehouse Management usage and performance](https://learn.microsoft.com/en-us/dynamics365/supply-chain/warehousing/application-insights-monitor-usage-performance)
+
+# What resources can I find in this repository?
+This repository contains instructions on how to gather telemetry from Dynamics 365 Supply Chain Management product.
+
+| Area  | Description  | Take me there (use CTRL+click to open in a new tab) |
+| ------ | ------ | ------ |
+| SampleXppExtensions | Root folder for the Dynamics 365 X++ artifacts providing sample source code emitting telemetry | [Sample Xpp Extensions ](SampleXppExtensions) |
+| Kusto queries | A repository of queries to consult Application Insights telemetry | [Kusto queries](KustoQueries) |
+| Dashboards\Azure Data Explorer | Making interactive dashboards in Azure Data Explorer with data from Azure Application Insights | [Azure Data Explorer dashboards](Dashboards/AzureDataExplorer/) |
 
 ## Contributing
 
