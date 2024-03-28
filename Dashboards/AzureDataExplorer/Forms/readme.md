@@ -1,17 +1,16 @@
-# Forms Interactions Telemetry dashboard
-This dashboard shows information about fomr interactions in Dynacmis 365 Finance and SCM applicaitons. Using this dashboard, it is possible to:
-- Investigate the most used form in the environment.
-- Review the opening time of the forms.
-- Investigate forms which fail to open.
-- Review form interactions by user or legal entity.
-- List all the form interacions. 
+# Forms usage dashboard
+This dashboard shows information about form usage in Dynacmis 365 Finance and SCM. Using this dashboard, it is possible to:
+- Investigate the most used forms in the environment with the ability to filter on a specific user, form name or activity id.
+- Review the opening times of the forms and find out what forms are slowest.
+- Review trends of the curent form loading times over the last 14 / 30 days.
+- Review individual opening times based on specific activities. 
 
 ## Dashboard overview
 Note: the "Interaction difference" column can be used to identify forms that never complete the initialization. 
-<div align=center><img src="./img/FormsInteractionsDashboard.png"></div>
+<div align=center><img src="./img/FormsUsageDashboard.png"></div>
 
 ## Steps to import the sample dashboard:
-  1. Import the file "ADE-Dashboard-D365FO-Monitoring-SlowQueries.json".
+  1. Import the file "ADE-Dashboard-D365FO-Monitoring-Forms.json".
   
   <div align=center><img src="./img/1ImportSample.png" width="600" height="300"></div>
 
