@@ -4,8 +4,8 @@
 | Dashboard  | Description  | Take me there (use CTRL+click to open in a new tab) |
 | ------ | ------ | ------ |
 | Slow queries | Slow queries reported by the AOS.     | [Slow Queries](SlowQueries) |
+| Form usage | Form usage telemetry.     | [Form Usage](Forms) |
 | Errors       | Errors reported by the envioronments. |  [Errors](Errors) |
-| Order 2 Cash | Order to cash process telemetry. | |
 
 ## Steps to import the sample dashboard:
   1. Import the file (e.g "ADE-Dashboard-D365FO-Monitoring-SlowQueries.json").
