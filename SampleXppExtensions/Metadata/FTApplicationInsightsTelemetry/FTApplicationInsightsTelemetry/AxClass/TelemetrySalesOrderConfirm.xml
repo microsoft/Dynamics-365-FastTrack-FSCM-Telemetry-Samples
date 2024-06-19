@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxClass xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Name>TelemetrySalesOrderConfirm</Name>
+	<SourceCode>
+		<Declaration><![CDATA[
+/// <summary>
+/// TelemetrySalesOrderConfirm class extending methods of MyTelemetryBase class
+/// </summary>
+final class TelemetrySalesOrderConfirm extends MyTelemetryBase
+{
+    private SalesTable salesTable;
+
+}
+]]></Declaration>
+		<Methods>
+			<Method>
+				<Name>new</Name>
+				<Source><![CDATA[
+    void new( SalesTable _salesTable)
+    {
+        super();
+        salesTable = _salesTable;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>shouldLogEvent</Name>
+				<Source><![CDATA[
+    protected boolean shouldLogEvent()
+    {
+        return true;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>populateProperties</Name>
+				<Source><![CDATA[
+    protected void populateProperties()
+    {
+        this.addBaseProperty(MyApplicationInsightsEventProperties::SalesId, salesTable.SalesId);
+        this.addBaseProperty(MyApplicationInsightsEventProperties::CustAccount, salesTable.CustAccount);
+        this.addBaseProperty(MyApplicationInsightsEventProperties::SalesStatus, strFmt("%1", salesTable.SalesStatus));
+        this.addBaseProperty(MyApplicationInsightsEventProperties::DeliveryDate, DateTimeUtil::toStr(salesTable.DeliveryDate));
+    }
+
+]]></Source>
+			</Method>
+		</Methods>
+	</SourceCode>
+</AxClass>
