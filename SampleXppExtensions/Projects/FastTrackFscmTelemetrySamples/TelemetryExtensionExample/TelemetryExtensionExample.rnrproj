@@ -53,6 +53,11 @@
       <Name>MyApplicationInsightsProperty</Name>
       <Link>MyApplicationInsightsProperty</Link>
     </Content>
+    <Content Include="AxClass\MySysIntParametersFormEventHandler">
+      <SubType>Content</SubType>
+      <Name>MySysIntParametersFormEventHandler</Name>
+      <Link>MySysIntParametersFormEventHandler</Link>
+    </Content>
     <Content Include="AxClass\MyTelemetryBase">
       <SubType>Content</SubType>
       <Name>MyTelemetryBase</Name>
@@ -78,10 +83,25 @@
       <Name>WhsShipConfirm_Extension</Name>
       <Link>WhsShipConfirm_Extension</Link>
     </Content>
+    <Content Include="AxEdt\MyTelemetryClass">
+      <SubType>Content</SubType>
+      <Name>MyTelemetryClass</Name>
+      <Link>MyTelemetryClass</Link>
+    </Content>
     <Content Include="AxEnum\MyTelemetrySeverityLevel">
       <SubType>Content</SubType>
       <Name>MyTelemetrySeverityLevel</Name>
       <Link>MyTelemetrySeverityLevel</Link>
+    </Content>
+    <Content Include="AxFormExtension\SysIntParameters.MyExtension">
+      <SubType>Content</SubType>
+      <Name>SysIntParameters.MyExtension</Name>
+      <Link>SysIntParameters.MyExtension</Link>
+    </Content>
+    <Content Include="AxTable\MyTelemetryParameters">
+      <SubType>Content</SubType>
+      <Name>MyTelemetryParameters</Name>
+      <Link>MyTelemetryParameters</Link>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.Common.targets" />

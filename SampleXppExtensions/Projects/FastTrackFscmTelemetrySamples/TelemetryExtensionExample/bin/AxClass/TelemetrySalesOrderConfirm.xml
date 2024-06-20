@@ -9,17 +9,23 @@
 final class TelemetrySalesOrderConfirm extends MyTelemetryBase
 {
     private SalesTable salesTable;
-
+    private str error;
 }
 ]]></Declaration>
 		<Methods>
 			<Method>
 				<Name>new</Name>
 				<Source><![CDATA[
-    void new( SalesTable _salesTable)
+    void new( SalesTable _salesTable,  str _error)
     {
         super();
         salesTable = _salesTable;
+        this.addBaseProperty(MyApplicationInsightsEventProperties::SalesId, salesTable.SalesId);
+        this.addBaseProperty(MyApplicationInsightsEventProperties::CustAccount, salesTable.CustAccount);
+        this.addBaseProperty(MyApplicationInsightsEventProperties::SalesStatus, strFmt("%1", salesTable.SalesStatus));
+        this.addBaseProperty(MyApplicationInsightsEventProperties::DeliveryDate, DateTimeUtil::toStr(salesTable.DeliveryDate));
+
+        this.error = _error;
     }
 
 ]]></Source>
@@ -29,6 +35,11 @@ final class TelemetrySalesOrderConfirm extends MyTelemetryBase
 				<Source><![CDATA[
     protected boolean shouldLogEvent()
     {
+        if(!this.error && telemetryLoggingParams.SeverityLevel > MyTelemetrySeverityLevel::Information)
+        {
+            return false;
+        }
+
         return true;
     }
 
@@ -39,10 +50,6 @@ final class TelemetrySalesOrderConfirm extends MyTelemetryBase
 				<Source><![CDATA[
     protected void populateProperties()
     {
-        this.addBaseProperty(MyApplicationInsightsEventProperties::SalesId, salesTable.SalesId);
-        this.addBaseProperty(MyApplicationInsightsEventProperties::CustAccount, salesTable.CustAccount);
-        this.addBaseProperty(MyApplicationInsightsEventProperties::SalesStatus, strFmt("%1", salesTable.SalesStatus));
-        this.addBaseProperty(MyApplicationInsightsEventProperties::DeliveryDate, DateTimeUtil::toStr(salesTable.DeliveryDate));
     }
 
 ]]></Source>

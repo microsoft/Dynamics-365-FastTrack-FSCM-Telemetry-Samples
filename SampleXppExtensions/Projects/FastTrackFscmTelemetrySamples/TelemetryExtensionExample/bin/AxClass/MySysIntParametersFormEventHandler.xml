@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxClass xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Name>MySysIntParametersFormEventHandler</Name>
+	<SourceCode>
+		<Declaration><![CDATA[
+internal final class MySysIntParametersFormEventHandler
+{
+}
+]]></Declaration>
+		<Methods>
+			<Method>
+				<Name>SysIntParameters_OnInitializing</Name>
+				<Source><![CDATA[
+/// <summary>
+///
+/// </summary>
+/// <param name="sender"></param>
+/// <param name="e"></param>
+[FormEventHandler(formStr(SysIntParameters), FormEventType::Initializing)]
+public static void SysIntParameters_OnInitializing(xFormRun sender, FormEventArgs e)
+    {
+
+        #define.ClassPath(@"\Classes\%1")
+
+        SysDictClass    dictClass;
+        List            extendedClassList;
+        ListEnumerator  listEnumerator;
+        ClassName       className;
+        // MethodName      methodName;
+        ClassId         childClass;
+        TreeNode        childClassNode;
+        TreeNode        methodNode;
+        int             numberofMethods;
+        MyTelemetryParameters  param;
+
+        //set parent class and method you want to investigate
+        className           = classStr(MyTelemetryBase);
+        //methodName          = "DefaultDimension";
+
+        dictClass           = new SysDictClass(className2Id(classname));
+        extendedClassList   = dictClass.extendedBy();
+
+        //loop through all child classes
+        if (extendedClassList.elements())
+        {
+            listEnumerator = extendedClassList.getEnumerator();
+
+            setprefix(strfmt("Class %1 extended by %2 classes.", className, int2str(extendedClassList.elements())));
+
+            while (listEnumerator.moveNext())
+            {
+                childClass      = listEnumerator.current();
+                childClassNode  = TreeNode::findNode(strFmt(#ClassPath, classId2Name(childClass)));
+
+                param = MyTelemetryParameters::find(childClassNode.AOTname());
+
+                if(!param)
+                {
+                    ttsbegin;
+                    param.clear();
+                    param.TelemetryClass = childClassNode.AOTname();
+                    param.IsEnabled = NoYes::Yes;
+                    param.SeverityLevel = MyTelemetrySeverityLevel::Information;
+                    param.insert();
+                    ttscommit;
+                }
+
+            }
+            
+        }
+        
+}
+
+]]></Source>
+			</Method>
+		</Methods>
+	</SourceCode>
+</AxClass>

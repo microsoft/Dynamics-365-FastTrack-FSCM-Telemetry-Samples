@@ -17,6 +17,7 @@ abstract class MyTelemetryBase
 
     System.Diagnostics.Stopwatch stopWatch = new System.Diagnostics.Stopwatch();
 
+    protected MyTelemetryParameters telemetryLoggingParams;
     //you can fill this field or not, if you dont fill it, it will be set to 0
     protected str eventId = "0";
 }
@@ -29,6 +30,9 @@ abstract class MyTelemetryBase
     {
         stopWatch = new System.Diagnostics.Stopwatch();
         stopWatch.Start();
+
+        // set the telemetry logging parameters
+        telemetryLoggingParams = MyTelemetryParameters::find(this.telemetryName());
     }
 
 ]]></Source>
@@ -133,14 +137,12 @@ abstract class MyTelemetryBase
         if(!this.shouldLogEvent())
             return true;
 
-        // ths part needs to be implemented
-        //if(!logParams.IsEnabled)
-        //    return true;
+        if(!telemetryLoggingParams.IsEnabled)
+            return true;
 
         
 
         return false;
-
     }
 
 ]]></Source>
@@ -150,10 +152,8 @@ abstract class MyTelemetryBase
 				<Source><![CDATA[
     private boolean shouldSkipOnSeverityLevel(MyTelemetrySeverityLevel severity)
     {
-        // Needs to be implemented
-
-        //if(logParams.SeverityLevel > severity)
-        //    return true;
+        if(telemetryLoggingParams.SeverityLevel > severity)
+            return true;
 
         return false;
     }
