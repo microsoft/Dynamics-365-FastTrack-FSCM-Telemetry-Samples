@@ -59,6 +59,13 @@ if all the classes are built fine, you should see the Cost control configuration
 
     ![Azure Application Insights](ScreenShots/ApplicationInsights.png)
 
+5. As you implement telemetry classes and log data into AppInsights, you can control the which events and which severity levels are logged in AppInsights by 2 different ways.
+a> You can disable particular kind of event sall together in the Extension UI
+    ![How to disable particular events](ScreenShots/HowToDisableParticularTelemetry.png)
+
+b> within the event class itself you can set a particular condition for the event to be logged. For example, in this class I have set only severity level above Information to be logged
+![fine grained control within the telemetry class](ScreenShots/FineGrainedControlwithinTheTelemetryClass.png)
+
 ## Contributing
 
 We welcome contributions to this project. To contribute:
