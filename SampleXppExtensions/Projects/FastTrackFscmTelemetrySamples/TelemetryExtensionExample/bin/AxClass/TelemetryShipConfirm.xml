@@ -44,6 +44,8 @@ final class TelemetryShipConfirm extends MyTelemetryBase
         select count(RecId) from loadLine where
             loadLine.LoadId == load.LoadId;
 
+        // Setting elapsed milliseconds in the concrete implementation so that the implementer can decide what is the right way to get elapsed time.
+        this.setElapsedMilliseconds();
         this.addBaseProperty(MyApplicationInsightsEventProperties::LoadId, load.LoadId);
         this.addBaseProperty(MyApplicationInsightsEventProperties::InventLocationId, load.InventLocationId);
         this.addBaseProperty(MyApplicationInsightsEventProperties::LoadStatus,strFmt("%1",load.LoadStatus));

@@ -197,7 +197,6 @@ abstract class MyTelemetryBase
             if(!_name)
                 _name = this.telemetryName();
 
-            this.setElapsedMilliseconds();
             this.populateProperties();
             this.logEvent(this.eventId, _name);
         }
@@ -225,7 +224,6 @@ abstract class MyTelemetryBase
             if(this.shouldSkipOnSeverityLevel(severity))
                 return;
 
-            this.setElapsedMilliseconds();
             this.populateProperties();
             this.logTrace(traceMessage, severity);
         }

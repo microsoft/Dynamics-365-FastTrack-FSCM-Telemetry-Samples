@@ -33,6 +33,11 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="AxClass\DMFDefinitionGroupExecutionHistory_Extension">
+      <SubType>Content</SubType>
+      <Name>DMFDefinitionGroupExecutionHistory_Extension</Name>
+      <Link>DMFDefinitionGroupExecutionHistory_Extension</Link>
+    </Content>
     <Content Include="AxClass\MyApplicationInsightsEventIds">
       <SubType>Content</SubType>
       <Name>MyApplicationInsightsEventIds</Name>
@@ -62,6 +67,11 @@
       <SubType>Content</SubType>
       <Name>MyTelemetryBase</Name>
       <Link>MyTelemetryBase</Link>
+    </Content>
+    <Content Include="AxClass\TelemetryDataManagementImport">
+      <SubType>Content</SubType>
+      <Name>TelemetryDataManagementImport</Name>
+      <Link>TelemetryDataManagementImport</Link>
     </Content>
     <Content Include="AxClass\TelemetryPurchaseOrderConfirm">
       <SubType>Content</SubType>

@@ -24,6 +24,13 @@ internal static final class MyApplicationInsightsEventProperties
     internal static const str VendorName                          = 'vendorName';
     internal static const str PurchStatus                         = 'PurchStatus';
     internal static const str ElapsedMilliseconds                 = 'ElapsedMilliseconds';
+    internal static const str DefinitionGroup                     = 'DefinitionGroup';
+    internal static const str Entity                              = 'Entity';
+    internal static const str ExecutionId                         = 'ExecutionId';
+    internal static const str NoOfRecords                         = 'NoOfRecords';
+    internal static const str NumOfTargetNew                      = 'NumOfTargetNew';
+    internal static const str NumOfTargetUpdated                  = 'NumOfTargetUpdated';
+
 }
 ]]></Declaration>
 		<Methods />

@@ -50,6 +50,8 @@ final class TelemetrySalesOrderConfirm extends MyTelemetryBase
 				<Source><![CDATA[
     protected void populateProperties()
     {
+        // Setting elapsed milliseconds in the concrete implementation so that the implementer can decide what is the right way to get elapsed time.
+        this.setElapsedMilliseconds();
     }
 
 ]]></Source>
