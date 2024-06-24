@@ -4,7 +4,7 @@
 	<SourceCode>
 		<Declaration><![CDATA[
 /// <summary>
-/// <c>CCBDMFDefinitionGroupExecutionHistory_Extension</c> Table extension
+/// <c>DMFDefinitionGroupExecutionHistory_Extension</c> Table extension
 /// </summary>
 [ExtensionOf(tableStr(DMFDefinitionGroupExecutionHistory))]
 final class DMFDefinitionGroupExecutionHistory_Extension
