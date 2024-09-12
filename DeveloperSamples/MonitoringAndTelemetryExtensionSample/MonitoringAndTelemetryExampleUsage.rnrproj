@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <BuildTasksDirectory Condition=" '$(BuildTasksDirectory)' == ''">$(MSBuildProgramFiles32)\MSBuild\Microsoft\Dynamics\AX</BuildTasksDirectory>
+    <Model>Foundation</Model>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <OutputPath>bin</OutputPath>
+    <SchemaVersion>2.0</SchemaVersion>
+    <GenerateCrossReferences>True</GenerateCrossReferences>
+    <RunAppCheckerRules>False</RunAppCheckerRules>
+    <LogAppcheckerDiagsAsErrors>False</LogAppcheckerDiagsAsErrors>
+    <DeployOnline>False</DeployOnline>
+    <ProjectGuid>{7a2363fb-28bd-4203-bddc-661cc58fbc68}</ProjectGuid>
+    <Name>MonitoringAndTelemetryExampleUsage</Name>
+    <RootNamespace>TelemetryExtensionExample</RootNamespace>
+    <StartupType>Class</StartupType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <Configuration>Debug</Configuration>
+    <DBSyncInBuild>False</DBSyncInBuild>
+    <GenerateFormAdaptors>False</GenerateFormAdaptors>
+    <Company>
+    </Company>
+    <Partition>initial</Partition>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DataEntityExpandParentChildRelations>False</DataEntityExpandParentChildRelations>
+    <DataEntityUseLabelTextAsFieldName>False</DataEntityUseLabelTextAsFieldName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include="AxClass\DMFDefinitionGroupExecutionHistory_Extension">
+      <SubType>Content</SubType>
+      <Name>DMFDefinitionGroupExecutionHistory_Extension</Name>
+      <Link>DMFDefinitionGroupExecutionHistory_Extension</Link>
+    </Content>
+    <Content Include="AxClass\MyApplicationInsightsEventIds">
+      <SubType>Content</SubType>
+      <Name>MyApplicationInsightsEventIds</Name>
+      <Link>MyApplicationInsightsEventIds</Link>
+    </Content>
+    <Content Include="AxClass\MyApplicationInsightsEventNames">
+      <SubType>Content</SubType>
+      <Name>MyApplicationInsightsEventNames</Name>
+      <Link>MyApplicationInsightsEventNames</Link>
+    </Content>
+    <Content Include="AxClass\MyApplicationInsightsEventProperties">
+      <SubType>Content</SubType>
+      <Name>MyApplicationInsightsEventProperties</Name>
+      <Link>MyApplicationInsightsEventProperties</Link>
+    </Content>
+    <Content Include="AxClass\MyApplicationInsightsProperty">
+      <SubType>Content</SubType>
+      <Name>MyApplicationInsightsProperty</Name>
+      <Link>MyApplicationInsightsProperty</Link>
+    </Content>
+    <Content Include="AxClass\MySysIntParametersFormEventHandler">
+      <SubType>Content</SubType>
+      <Name>MySysIntParametersFormEventHandler</Name>
+      <Link>MySysIntParametersFormEventHandler</Link>
+    </Content>
+    <Content Include="AxClass\MyTelemetryBase">
+      <SubType>Content</SubType>
+      <Name>MyTelemetryBase</Name>
+      <Link>MyTelemetryBase</Link>
+    </Content>
+    <Content Include="AxClass\TelemetryDataManagementImport">
+      <SubType>Content</SubType>
+      <Name>TelemetryDataManagementImport</Name>
+      <Link>TelemetryDataManagementImport</Link>
+    </Content>
+    <Content Include="AxClass\TelemetryPurchaseOrderConfirm">
+      <SubType>Content</SubType>
+      <Name>TelemetryPurchaseOrderConfirm</Name>
+      <Link>TelemetryPurchaseOrderConfirm</Link>
+    </Content>
+    <Content Include="AxClass\TelemetrySalesOrderConfirm">
+      <SubType>Content</SubType>
+      <Name>TelemetrySalesOrderConfirm</Name>
+      <Link>TelemetrySalesOrderConfirm</Link>
+    </Content>
+    <Content Include="AxClass\TelemetryShipConfirm">
+      <SubType>Content</SubType>
+      <Name>TelemetryShipConfirm</Name>
+      <Link>TelemetryShipConfirm</Link>
+    </Content>
+    <Content Include="AxClass\WhsShipConfirm_Extension">
+      <SubType>Content</SubType>
+      <Name>WhsShipConfirm_Extension</Name>
+      <Link>WhsShipConfirm_Extension</Link>
+    </Content>
+    <Content Include="AxEdt\MyTelemetryClass">
+      <SubType>Content</SubType>
+      <Name>MyTelemetryClass</Name>
+      <Link>MyTelemetryClass</Link>
+    </Content>
+    <Content Include="AxEnum\MyTelemetrySeverityLevel">
+      <SubType>Content</SubType>
+      <Name>MyTelemetrySeverityLevel</Name>
+      <Link>MyTelemetrySeverityLevel</Link>
+    </Content>
+    <Content Include="AxFormExtension\SysIntParameters.MyExtension">
+      <SubType>Content</SubType>
+      <Name>SysIntParameters.MyExtension</Name>
+      <Link>SysIntParameters.MyExtension</Link>
+    </Content>
+    <Content Include="AxTable\MyTelemetryParameters">
+      <SubType>Content</SubType>
+      <Name>MyTelemetryParameters</Name>
+      <Link>MyTelemetryParameters</Link>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.Common.targets" />
+  <Import Project="$(BuildTasksDirectory)\Microsoft.Dynamics.Framework.Tools.BuildTasks.17.0.targets" />
+</Project>

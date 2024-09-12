@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.35004.147
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FC65038C-1B2F-41E1-A629-BED71D161FFF}") = "MonitoringAndTelemetryExampleUsage (SYS) [Application Suite]", "MonitoringAndTelemetryExampleUsage.rnrproj", "{7A2363FB-28BD-4203-BDDC-661CC58FBC68}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7A2363FB-28BD-4203-BDDC-661CC58FBC68}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A2363FB-28BD-4203-BDDC-661CC58FBC68}.Debug|Any CPU.Build.0 = Debug|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {86B94DEA-DDB4-40C8-89F3-6F762E52161C}
+	EndGlobalSection
+EndGlobal
