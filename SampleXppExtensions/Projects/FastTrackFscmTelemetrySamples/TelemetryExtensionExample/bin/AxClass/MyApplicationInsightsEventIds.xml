@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxClass xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Name>MyApplicationInsightsEventIds</Name>
+	<SourceCode>
+		<Declaration><![CDATA[
+internal static final class MyApplicationInsightsEventIds
+{
+    internal static const str WHSShipConfirm                    = '1'; // eventId to indicate WHS ship confirm. Add more explanation to indicate the eventId here.
+}
+
+]]></Declaration>
+		<Methods />
+	</SourceCode>
+</AxClass>

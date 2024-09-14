@@ -1,0 +1,461 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxClass xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Name>MyTelemetryBase</Name>
+	<SourceCode>
+		<Declaration><![CDATA[
+/// <summary>
+/// MyTelemetryBase class
+/// </summary>
+/// 
+
+ using DataContracts = Microsoft.ApplicationInsights.DataContracts;
+
+abstract class MyTelemetryBase
+{
+    protected Map basePropertyMap = new Map(Types::String, Types::string);
+    protected Map runtimePropertyMap = new Map(Types::String, Types::string);
+
+    System.Diagnostics.Stopwatch stopWatch = new System.Diagnostics.Stopwatch();
+
+    protected MyTelemetryParameters telemetryLoggingParams;
+    //you can fill this field or not, if you dont fill it, it will be set to 0
+    protected str eventId = "0";
+}
+]]></Declaration>
+		<Methods>
+			<Method>
+				<Name>new</Name>
+				<Source><![CDATA[
+    void new()
+    {
+        stopWatch = new System.Diagnostics.Stopwatch();
+        stopWatch.Start();
+
+        // set the telemetry logging parameters
+        telemetryLoggingParams = MyTelemetryParameters::find(this.telemetryName());
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>telemetryName</Name>
+				<Source><![CDATA[
+    /// <summary>
+    /// Class telemetryName
+    /// </summary>
+    /// <returns>Telemetry</returns>
+    protected ClassName telemetryName()
+    {
+        return classId2Name(classIdGet(this));
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>setElapsedMilliseconds</Name>
+				<Source><![CDATA[
+    protected void setElapsedMilliseconds()
+    {
+        // Get the elapsed milliseconds without stopping the stopwatch
+        int64 elapsedMilliseconds = stopwatch.get_ElapsedMilliseconds();
+        this.addRuntimeProperty(MyApplicationInsightsEventProperties::ElapsedMilliseconds, int642str(elapsedMilliseconds));
+        stopWatch.Restart();
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>addBaseProperty</Name>
+				<Source><![CDATA[
+    protected void addBaseProperty(str key, str value)
+    {
+        try
+        {
+            basePropertyMap.insert(key, value);
+        }
+        catch
+        {
+            warning(strFmt("Telemetry Add Runtime Property Error - className : %1",classId2Name(classIdGet(this))));
+        }
+  
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>addRuntimeProperty</Name>
+				<Source><![CDATA[
+    public void addRuntimeProperty(str key, str value)
+    {
+        //find the old property:
+        //check if theres a base property and update that one with the new value
+        // If you want to have always a property present in the telemetry, you declare it as base property but can then "addRuntimeProperty" to update it if in the
+        // process the property is supposed to change
+
+        try
+        {
+            if(basePropertyMap.exists(key))
+            {
+                this.addBaseProperty(key, value);
+            }
+            else
+            {
+                runtimePropertyMap.insert(key, value);
+            }
+        }
+        catch
+        {
+            warning(strFmt("Telemetry Add Runtime Property Error - className : %1",classId2Name(classIdGet(this))));
+        }
+        
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>clearRuntimeProperties</Name>
+				<Source><![CDATA[
+    public void clearRuntimeProperties()
+    {
+        try
+        {
+            runtimePropertyMap = new Map(Types::String, Types::String);
+        }
+        catch
+        {
+            warning(strFmt("Telemetry Clear Runtime Properties Error - className : %1",classId2Name(classIdGet(this))));
+        }
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>shouldSkipLogging</Name>
+				<Source><![CDATA[
+    private boolean shouldSkipLogging()
+    {
+        if(!this.shouldLogEvent())
+            return true;
+
+        if(!telemetryLoggingParams.IsEnabled)
+            return true;
+
+        
+
+        return false;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>shouldSkipOnSeverityLevel</Name>
+				<Source><![CDATA[
+    private boolean shouldSkipOnSeverityLevel(MyTelemetrySeverityLevel severity)
+    {
+        if(telemetryLoggingParams.SeverityLevel > severity)
+            return true;
+
+        return false;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>processMetric</Name>
+				<Source><![CDATA[
+    /// <summary>
+    /// Method ProcessMetric
+    /// </summary>
+    public final void processMetric(real _value)
+    {
+        try
+        {
+            this.logMetric(_value);
+        }
+        catch
+        {
+            warning(strFmt("Telemetry Metric Processing Error - className : %1",classId2Name(classIdGet(this))));
+        }
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>processEvent</Name>
+				<Source><![CDATA[
+    /// <summary>
+    /// Method processEvent
+    /// </summary>
+    public final void processEvent(str _name)
+    {
+        try
+        {
+
+            if(this.shouldSkipLogging())
+                return;
+
+            if(!_name)
+                _name = this.telemetryName();
+
+            this.populateProperties();
+            this.logEvent(this.eventId, _name);
+        }
+        catch
+        {
+            warning(strFmt("Telemetry Event Processing Error: className : %1 - EventName: %2", classId2Name(classIdGet(this)), _name));
+        }
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>processTrace</Name>
+				<Source><![CDATA[
+    /// <summary>
+    /// Method processTrace
+    /// </summary>
+    public final void processTrace(str traceMessage, MyTelemetrySeverityLevel severity = MyTelemetrySeverityLevel::Information)
+    {
+        try
+        {
+            if(this.shouldSkipLogging())
+                return;
+
+            if(this.shouldSkipOnSeverityLevel(severity))
+                return;
+
+            this.populateProperties();
+            this.logTrace(traceMessage, severity);
+        }
+        catch
+        {
+            warning(strFmt("Telemetry Trace Processing Error: className : %1 - TraceMessage: %2", classId2Name(classIdGet(this)), traceMessage));
+        }
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>populateProperties</Name>
+				<Source><![CDATA[
+    /// <summary>
+    /// Method Populate properties. This housld be implemented by the concrete class that extends this base.
+    /// </summary>
+    protected abstract void populateProperties()
+    {
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>metricName</Name>
+				<Source><![CDATA[
+    /// <summary>
+    /// Class metricName
+    /// </summary>
+    /// <returns>Telemetry</returns>
+    protected ClassName metricName()
+    {
+        return classId2Name(classIdGet(this));
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>logMetric</Name>
+				<Source><![CDATA[
+    ///<summary>
+    ///</summary>
+    protected void logMetric(real _value)
+    {
+        SysApplicationInsightsTelemetryLogger::instance().trackMetric(this.metricName(), _value);
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>logMetricWithDimensions</Name>
+				<Source><![CDATA[
+    ///<summary>
+    ///</summary>
+    protected void logMetricWithDimensions(real _value, str _dimension1Name, str _dimension1Value, str _dimension2Name = "", str _dimension2Value = '', str _dimension3Name = '', str _dimension3Value = '')
+    {
+        SysApplicationInsightsTelemetryLogger::instance().trackMetricWithDimensions(this.metricName(), _value, _dimension1Name, _dimension1Value, _dimension2Name, _dimension2Value, _dimension3Name, _dimension3Value);
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>logEvent</Name>
+				<Source><![CDATA[
+    /// <summary>
+    /// Method Log
+    /// </summary>
+    protected void logEvent(str _eventId, str _name)
+    {
+        SysApplicationInsightsEventTelemetry eventTelemetry = SysApplicationInsightsEventTelemetry::newFromEventIdName(_eventId, _name);
+
+        MapIterator iterator;
+        str key, value;
+
+        // Get an iterator for the map
+        iterator = new MapIterator(basePropertyMap);
+
+        // Loop through the map & add base properties
+        while (iterator.more())
+        {
+            key = iterator.key();
+            value = iterator.value();
+            
+            var property = new MyApplicationInsightsProperty(key, value, SysApplicationInsightsComplianceDataType::CustomerContent);
+            eventTelemetry.addProperty(property);
+            iterator.next();
+        }
+
+        //add runtime properties:
+        iterator = new MapIterator(runtimePropertyMap);
+
+        // Loop through the map & add base properties
+        while (iterator.more())
+        {
+            key = iterator.key();
+            value = iterator.value();
+            
+            var property = new MyApplicationInsightsProperty(key, value, SysApplicationInsightsComplianceDataType::CustomerContent);
+            eventTelemetry.addProperty(property);
+            iterator.next();
+        }
+
+        SysApplicationInsightsTelemetryLogger::instance().trackEvent(eventTelemetry);
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>shouldLogEvent</Name>
+				<Source><![CDATA[
+    //Enables implement custom conditions for e.g. events for the customer to use to save costs, or log events conditionally!
+    // If this one is implemented it will always win over the logEvent method
+    protected abstract boolean shouldLogEvent()
+    {
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>logTrace</Name>
+				<Source><![CDATA[
+    /// <summary>
+    /// Method Log
+    /// </summary>
+    protected void logTrace(str traceMessage, MyTelemetrySeverityLevel severity = MyTelemetrySeverityLevel::Information)
+    {
+        DataContracts.SeverityLevel dotNetSeverity;
+        switch(severity)
+        {
+            case MyTelemetrySeverityLevel::Critical:
+                dotNetSeverity = DataContracts.SeverityLevel::Critical;
+                break;
+            case MyTelemetrySeverityLevel::Error:
+                dotNetSeverity = DataContracts.SeverityLevel::Error;
+                break;
+            case MyTelemetrySeverityLevel::Warning:
+                dotNetSeverity = DataContracts.SeverityLevel::Warning;
+                break;
+            case MyTelemetrySeverityLevel::Information:
+                dotNetSeverity = DataContracts.SeverityLevel::Information;
+                break;
+            case MyTelemetrySeverityLevel::Verbose:
+                dotNetSeverity = DataContracts.SeverityLevel::Verbose;
+                break;
+            default:
+                dotNetSeverity = DataContracts.SeverityLevel::Information;
+                break;
+        }
+        SysApplicationInsightsTraceTelemetry traceTelemetry = SysApplicationInsightsTraceTelemetry::newFromEventIdName(traceMessage, dotNetSeverity);
+
+        MapIterator iterator;
+        str key, value;
+
+        // Get an iterator for the map
+        iterator = new MapIterator(basePropertyMap);
+
+        // Loop through the map & add base properties
+        while (iterator.more())
+        {
+            key = iterator.key();
+            value = iterator.value();
+            
+            var property = new MyApplicationInsightsProperty(key, value, SysApplicationInsightsComplianceDataType::CustomerContent);
+            traceTelemetry.addProperty(property);
+            iterator.next();
+        }
+
+        //add runtime properties:
+        iterator = new MapIterator(runtimePropertyMap);
+
+        // Loop through the map & add base properties
+        while (iterator.more())
+        {
+            key = iterator.key();
+            value = iterator.value();
+            
+            var property = new MyApplicationInsightsProperty(key, value, SysApplicationInsightsComplianceDataType::CustomerContent);
+            traceTelemetry.addProperty(property);
+            iterator.next();
+        }
+
+        SysApplicationInsightsTelemetryLogger::instance().trackTrace(traceTelemetry);
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>logException</Name>
+				<Source><![CDATA[
+    /// <summary>
+    /// Method Log
+    /// </summary>
+    protected void logException(str message)
+    {
+        SysApplicationInsightsExceptionTelemetry exceptionTelemetry = SysApplicationInsightsExceptionTelemetry::newFromExceptionMessage(message);
+
+        MapIterator iterator;
+        str key, value;
+
+        // Get an iterator for the map
+        iterator = new MapIterator(basePropertyMap);
+
+        // Loop through the map & add base properties
+        while (iterator.more())
+        {
+            key = iterator.key();
+            value = iterator.value();
+            
+            var property = new MyApplicationInsightsProperty(key, value, SysApplicationInsightsComplianceDataType::CustomerContent);
+            exceptionTelemetry.addProperty(property);
+            iterator.next();
+        }
+
+        //add runtime properties:
+        iterator = new MapIterator(runtimePropertyMap);
+
+        // Loop through the map & add base properties
+        while (iterator.more())
+        {
+            key = iterator.key();
+            value = iterator.value();
+            
+            var property = new MyApplicationInsightsProperty(key, value, SysApplicationInsightsComplianceDataType::CustomerContent);
+            exceptionTelemetry.addProperty(property);
+            iterator.next();
+        }
+
+        SysApplicationInsightsTelemetryLogger::instance().trackException(exceptionTelemetry);
+    }
+
+]]></Source>
+			</Method>
+		</Methods>
+	</SourceCode>
+</AxClass>

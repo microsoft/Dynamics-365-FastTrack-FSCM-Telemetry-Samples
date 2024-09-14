@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxClass xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Name>MyApplicationInsightsProperty</Name>
+	<SourceCode>
+		<Declaration><![CDATA[
+/// <summary>
+/// Concrete class for Application Insights message payload properties.
+/// </summary>
+public final class MyApplicationInsightsProperty extends SysApplicationInsightsProperty
+{
+    private str key;
+    private SysApplicationInsightsComplianceDataType dataType;
+
+}
+]]></Declaration>
+		<Methods>
+			<Method>
+				<Name>new</Name>
+				<Source><![CDATA[
+    // Constructor
+    public void new(str _key, str _value, SysApplicationInsightsComplianceDataType _dataType)
+    {
+        key = _key;
+        dataType = _dataType;
+        super(_value);
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>initialize</Name>
+				<Source><![CDATA[
+    protected container initialize()
+    {
+        return [key, dataType];
+    }
+
+]]></Source>
+			</Method>
+		</Methods>
+	</SourceCode>
+</AxClass>
