@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Diagnostics
+  GenerationTime="2024-10-21T11:49:57.4857348+02:00">
+  <Items>
+    <Diagnostic>
+      <DiagnosticType>Compile</DiagnosticType>
+      <Severity>Warning</Severity>
+      <Path>dynamics://Class/MyTelemetryEventHandlers/Method/BatchRunBusinessEvents_emitJobEndBusinessEventsUsingBatchJobUpdateTmpDelegate</Path>
+      <ElementType>Class Method</ElementType>
+      <Moniker>IntrinsicArgIsNotAccessible</Moniker>
+      <Line>10</Line>
+      <Column>19</Column>
+      <EndLine>10</EndLine>
+      <EndColumn>51</EndColumn>
+      <Message>The argument 'BatchRunBusinessEvents' used in the intrinsic function 'classStr' is not accessible. This warning will be turned into an error and must be addressed.</Message>
+    </Diagnostic>
+    <Diagnostic>
+      <DiagnosticType>Compile</DiagnosticType>
+      <Severity>Warning</Severity>
+      <Path>dynamics://Class/MyTelemetryEventHandlers/Method/BatchRunBusinessEvents_emitJobEndBusinessEventsUsingBatchJobUpdateTmpDelegate</Path>
+      <ElementType>Class Method</ElementType>
+      <Moniker>IntrinsicArgIsNotAccessible</Moniker>
+      <Line>10</Line>
+      <Column>53</Column>
+      <EndLine>10</EndLine>
+      <EndColumn>144</EndColumn>
+      <Message>The argument 'BatchRunBusinessEvents' used in the intrinsic function 'delegateStr' is not accessible. This warning will be turned into an error and must be addressed.</Message>
+    </Diagnostic>
+    <Diagnostic>
+      <DiagnosticType>Compile</DiagnosticType>
+      <Severity>Warning</Severity>
+      <Path>dynamics://Class/MyTelemetryBase/Method/logTrace</Path>
+      <ElementType>Class Method</ElementType>
+      <Moniker>ObsoleteEntityUsageWithReason</Moniker>
+      <Line>541</Line>
+      <Column>63</Column>
+      <EndLine>541</EndLine>
+      <EndColumn>149</EndColumn>
+      <Message>'newFromEventIdName' is obsolete: '"newFromEventIdName is obsolete. Use the newFromMessageAndSeverity method."'.</Message>
+    </Diagnostic>
+  </Items>
+  <Aliases />
+</Diagnostics>

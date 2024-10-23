@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxClass xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Name>MyTelemetryBatch</Name>
+	<SourceCode>
+		<Declaration><![CDATA[
+/// <summary>
+/// Class to log batch telemtry.
+/// </summary>
+public class MyTelemetryBatch extends MyTelemetryBase
+{
+
+    Batch batch, batchOrig, batchData;
+    BatchJob batchJob, batchJobOrig;
+    BatchJobUpdateTmp batchJobUpdateTmp;
+
+}
+]]></Declaration>
+		<Methods>
+			<Method>
+				<Name>new</Name>
+				<Source><![CDATA[
+    public void new(Common orig, Common cur, BatchJobUpdateTmp tmpUpdate = null)
+    {
+        super();
+        try
+        {
+            //make sure logging is not enabled if first time setup
+            if(!logParams)
+            {
+                logParams.IsEnabled = NoYes::No;
+            }
+
+            //building in killswitch
+            if(this.shouldSkipLogging())
+            {
+                return;
+            }
+
+            if(orig is Batch)
+            {
+                
+                batch = cur as Batch;
+                batchOrig = orig as Batch;
+
+                if(batch.Caption == null)
+                {
+                    batchData = Batch::findRecId(batch.RecId);
+                    this.mergeMissingDataFromBatchSelection();
+                }
+                else
+                {
+                    batchData = batch;
+                }
+
+
+
+                this.getBatchData();
+            }
+            else
+            {
+                batchJob = cur as BatchJob;
+                batchJobOrig = orig as BatchJob;
+                batchJobUpdateTmp = tmpUpdate;
+                this.getBatchJobData();
+
+            }
+        }
+        catch
+        {
+           
+            //do nothing
+        }
+
+        
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>logBatchJobAsync</Name>
+				<Source><![CDATA[
+    /// <summary>
+    /// This has been created due to the fact during SysSetupInstaller the SysTelemetry classes fail due to a missing config element 
+    /// </summary>
+    /// <param name = "_args">Batch table</param>
+    public static void logBatchJobAsync(container _args)
+    {
+        MyTelemetryBatch telemetry = new MyTelemetryBatch(conPeek(_args, 1), conPeek(_args, 2));
+        telemetry.processEvent(conPeek(_args, 3));
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>mergeMissingDataFromBatchSelection</Name>
+				<Source><![CDATA[
+    private void mergeMissingDataFromBatchSelection()
+    {
+        
+        if(batch.Status)
+        {
+            batchData.Status = batch.Status;
+        }
+        
+        if(batch.EndDateTime)
+        {
+            batchData.EndDateTime = batch.EndDateTime;
+        }
+
+        if(batch.Info)
+        {
+            batchData.Info = batch.Info;
+        }
+
+        if(batch.ExceptionCode)
+        {
+            batchData.ExceptionCode = batch.ExceptionCode;
+        }
+        
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>getBatchJobData</Name>
+				<Source><![CDATA[
+    private void getBatchJobData()
+    {
+
+        this.addRuntimeProperty(MyTelemetryProperties::BatchJobId, int642Str(batchJob.RecId));
+        this.addRuntimeProperty(MyTelemetryProperties::BatchJobName, batchJob.Caption);
+
+        if(batchJobUpdateTmp == null)
+        {
+            this.addRuntimeProperty(MyTelemetryProperties::NewStatus, enum2Str(batchJob.Status));
+            this.addRuntimeProperty(MyTelemetryProperties::StartDateTime, datetime2Str(batchJob.StartDateTime));
+            this.addRuntimeProperty(MyTelemetryProperties::EndDateTime, datetime2Str(batchJob.EndDateTime));
+        }
+        else
+        {
+            this.addRuntimeProperty(MyTelemetryProperties::NewStatus, enum2Str(batchJobUpdateTmp.Status));
+            this.addRuntimeProperty(MyTelemetryProperties::StartDateTime, datetime2Str(batchJobUpdateTmp.StartDateTime));
+            this.addRuntimeProperty(MyTelemetryProperties::EndDateTime, datetime2Str(batchJobUpdateTmp.EndDateTime));
+        }
+
+        this.addRuntimeProperty(MyTelemetryProperties::OrigStatus, enum2Str(batchJobOrig.Status));
+        this.addRuntimeProperty(MyTelemetryProperties::Reccurence, batchJob.recurrenceText());
+        this.addRuntimeProperty(MyTelemetryProperties::DataAreaId, batchJob.Company);
+        this.addRuntimeProperty(MyTelemetryProperties::CreatedBy, batchJob.CreatedBy);
+        this.addRuntimeProperty(MyTelemetryProperties::ExecutingBy, batchJob.ExecutingBy);
+
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>getBatchData</Name>
+				<Source><![CDATA[
+    private void getBatchData()
+    {
+        this.addRuntimeProperty(MyTelemetryProperties::BatchJobId, int642Str(batchData.BatchJobId));
+        this.addRuntimeProperty(MyTelemetryProperties::BatchJobTaskId, int642Str(batchData.RecId));
+        this.addRuntimeProperty(MyTelemetryProperties::BatchJobName, batchData.Caption);
+        this.addRuntimeProperty(MyTelemetryProperties::NewStatus, enum2Str(batchData.Status));
+        this.addRuntimeProperty(MyTelemetryProperties::OrigStatus, enum2Str(batchOrig.Status));
+      
+        this.addRuntimeProperty(MyTelemetryProperties::DataAreaId, batchData.Company);
+        this.addRuntimeProperty(MyTelemetryProperties::ClassName, classId2Name(batchData.ClassNumber));
+        this.addRuntimeProperty(MyTelemetryProperties::StartDateTime, datetime2Str(batchData.StartDateTime));
+        this.addRuntimeProperty(MyTelemetryProperties::EndDateTime, datetime2Str(batchData.EndDateTime));
+        this.addRuntimeProperty(MyTelemetryProperties::RuntimeTask, enum2Str(batchData.RunTimeTask));
+        this.addRuntimeProperty(MyTelemetryProperties::RetryCount, int2Str(batchData.retryCount));
+        this.addRuntimeProperty(MyTelemetryProperties::AOS, batchData.ServerId);
+        this.addRuntimeProperty(MyTelemetryProperties::CreatedBy, batchData.CreatedBy);
+        this.addRuntimeProperty(MyTelemetryProperties::ExecutingBy, batchData.ExecutedBy);
+
+        if(batchData.Status == BatchStatus::Error || batchData.Info != conNull())
+        {
+            this.addRuntimeProperty(MyTelemetryProperties::Error,this.convertInfoLogDataToString(batchData.Info));
+        }
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>convertInfoLogDataToString</Name>
+				<Source><![CDATA[
+    private  str convertInfoLogDataToString(InfoLogData infoLogData)
+    {
+        SysInfologEnumerator    enumerator;
+        SysInfologMessageStruct msgStruct;
+        Exception               exception;
+        str                     error;
+
+        
+
+        enumerator = SysInfologEnumerator::newData(infoLogData);
+
+        while (enumerator.moveNext())
+        {
+            msgStruct = new SysInfologMessageStruct(enumerator.currentMessage());
+            exception = enumerator.currentException();
+            error = strfmt("@SYS82282"+ ' '+"@MCR26302", error, msgStruct.message());
+        }
+
+        return error;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>shouldLogEvent</Name>
+				<Source><![CDATA[
+    protected boolean shouldLogEvent()
+    {
+        return true;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>postPopulateProperties</Name>
+				<Source><![CDATA[
+    protected  void postPopulateProperties()
+    {
+    }
+
+]]></Source>
+			</Method>
+		</Methods>
+	</SourceCode>
+</AxClass>

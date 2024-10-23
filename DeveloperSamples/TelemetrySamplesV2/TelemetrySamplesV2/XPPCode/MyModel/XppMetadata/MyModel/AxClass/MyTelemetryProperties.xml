@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<z:anyType xmlns:i="http://www.w3.org/2001/XMLSchema-instance" xmlns=""
+	i:type="AxCompilerMetadata" xmlns:z="http://schemas.microsoft.com/2003/10/Serialization/">
+	<IsFinal>true</IsFinal>
+	<IsPublic>true</IsPublic>
+	<IsStatic>true</IsStatic>
+	<Members>
+		<AxClassMemberVariable>
+			<Tags></Tags>
+			<Type>String</Type>
+			<TypeName></TypeName>
+			<Name>BatchJobId</Name>
+			<Attributes />
+			<IsConst>true</IsConst>
+			<IsStatic>true</IsStatic>
+			<Visibility>Public</Visibility>
+		</AxClassMemberVariable>
+		<AxClassMemberVariable>
+			<Tags></Tags>
+			<Type>String</Type>
+			<TypeName></TypeName>
+			<Name>BatchJobTaskId</Name>
+			<Attributes />
+			<IsConst>true</IsConst>
+			<IsStatic>true</IsStatic>
+			<Visibility>Public</Visibility>
+		</AxClassMemberVariable>
+		<AxClassMemberVariable>
+			<Tags></Tags>
+			<Type>String</Type>
+			<TypeName></TypeName>
+			<Name>ChildBatchJobId</Name>
+			<Attributes />
+			<IsConst>true</IsConst>
+			<IsStatic>true</IsStatic>
+			<Visibility>Public</Visibility>
+		</AxClassMemberVariable>
+		<AxClassMemberVariable>
+			<Tags></Tags>
+			<Type>String</Type>
+			<TypeName></TypeName>
+			<Name>OrigStatus</Name>
+			<Attributes />
+			<IsConst>true</IsConst>
+			<IsStatic>true</IsStatic>
+			<Visibility>Public</Visibility>
+		</AxClassMemberVariable>
+		<AxClassMemberVariable>
+			<Tags></Tags>
+			<Type>String</Type>
+			<TypeName></TypeName>
+			<Name>NewStatus</Name>
+			<Attributes />
+			<IsConst>true</IsConst>
+			<IsStatic>true</IsStatic>
+			<Visibility>Public</Visibility>
+		</AxClassMemberVariable>
+		<AxClassMemberVariable>
+			<Tags></Tags>
+			<Type>String</Type>
+			<TypeName></TypeName>
+			<Name>BatchJobName</Name>
+			<Attributes />
+			<IsConst>true</IsConst>
+			<IsStatic>true</IsStatic>
+			<Visibility>Public</Visibility>
+		</AxClassMemberVariable>
+		<AxClassMemberVariable>
+			<Tags></Tags>
+			<Type>String</Type>
+			<TypeName></TypeName>
+			<Name>Reccurence</Name>
+			<Attributes />
+			<IsConst>true</IsConst>
+			<IsStatic>true</IsStatic>
+			<Visibility>Public</Visibility>
+		</AxClassMemberVariable>
+		<AxClassMemberVariable>
+			<Tags></Tags>
+			<Type>String</Type>
+			<TypeName></TypeName>
+			<Name>CreatedBy</Name>
+			<Attributes />
+			<IsConst>true</IsConst>
+			<IsStatic>true</IsStatic>
+			<Visibility>Public</Visibility>
+		</AxClassMemberVariable>
+		<AxClassMemberVariable>
+			<Tags></Tags>
+			<Type>String</Type>
+			<TypeName></TypeName>
+			<Name>ExecutingBy</Name>
+			<Attributes />
+			<IsConst>true</IsConst>
+			<IsStatic>true</IsStatic>
+			<Visibility>Public</Visibility>
+		</AxClassMemberVariable>
+		<AxClassMemberVariable>
+			<Tags></Tags>
+			<Type>String</Type>
+			<TypeName></TypeName>
+			<Name>OrderType</Name>
+			<Attributes />
+			<IsConst>true</IsConst>
+			<IsStatic>true</IsStatic>
+			<Visibility>Public</Visibility>
+		</AxClassMemberVariable>
+		<AxClassMemberVariable>
+			<Tags></Tags>
+			<Type>String</Type>
+			<TypeName></TypeName>
+			<Name>StartDateTime</Name>
+			<Attributes />
+			<IsConst>true</IsConst>
+			<IsStatic>true</IsStatic>
+			<Visibility>Public</Visibility>
+		</AxClassMemberVariable>
+		<AxClassMemberVariable>
+			<Tags></Tags>
+			<Type>String</Type>
+			<TypeName></TypeName>
+			<Name>EndDateTime</Name>
+			<Attributes />
+			<IsConst>true</IsConst>
+			<IsStatic>true</IsStatic>
+			<Visibility>Public</Visibility>
+		</AxClassMemberVariable>
+		<AxClassMemberVariable>
+			<Tags></Tags>
+			<Type>String</Type>
+			<TypeName></TypeName>
+			<Name>RuntimeTask</Name>
+			<Attributes />
+			<IsConst>true</IsConst>
+			<IsStatic>true</IsStatic>
+			<Visibility>Public</Visibility>
+		</AxClassMemberVariable>
+		<AxClassMemberVariable>
+			<Tags></Tags>
+			<Type>String</Type>
+			<TypeName></TypeName>
+			<Name>AOS</Name>
+			<Attributes />
+			<IsConst>true</IsConst>
+			<IsStatic>true</IsStatic>
+			<Visibility>Public</Visibility>
+		</AxClassMemberVariable>
+		<AxClassMemberVariable>
+			<Tags></Tags>
+			<Type>String</Type>
+			<TypeName></TypeName>
+			<Name>CurrentUserId</Name>
+			<Attributes />
+			<IsConst>true</IsConst>
+			<IsStatic>true</IsStatic>
+			<Visibility>Public</Visibility>
+		</AxClassMemberVariable>
+		<AxClassMemberVariable>
+			<Tags></Tags>
+			<Type>String</Type>
+			<TypeName></TypeName>
+			<Name>DataAreaId</Name>
+			<Attributes />
+			<IsConst>true</IsConst>
+			<IsStatic>true</IsStatic>
+			<Visibility>Public</Visibility>
+		</AxClassMemberVariable>
+		<AxClassMemberVariable>
+			<Tags></Tags>
+			<Type>String</Type>
+			<TypeName></TypeName>
+			<Name>BatchCaption</Name>
+			<Attributes />
+			<IsConst>true</IsConst>
+			<IsStatic>true</IsStatic>
+			<Visibility>Public</Visibility>
+		</AxClassMemberVariable>
+		<AxClassMemberVariable>
+			<Tags></Tags>
+			<Type>String</Type>
+			<TypeName></TypeName>
+			<Name>CallStack</Name>
+			<Attributes />
+			<IsConst>true</IsConst>
+			<IsStatic>true</IsStatic>
+			<Visibility>Public</Visibility>
+		</AxClassMemberVariable>
+		<AxClassMemberVariable>
+			<Tags></Tags>
+			<Type>String</Type>
+			<TypeName></TypeName>
+			<Name>ElapsedMilliseconds</Name>
+			<Attributes />
+			<IsConst>true</IsConst>
+			<IsStatic>true</IsStatic>
+			<Visibility>Public</Visibility>
+		</AxClassMemberVariable>
+		<AxClassMemberVariable>
+			<Tags></Tags>
+			<Type>String</Type>
+			<TypeName></TypeName>
+			<Name>Error</Name>
+			<Attributes />
+			<IsConst>true</IsConst>
+			<IsStatic>true</IsStatic>
+			<Visibility>Public</Visibility>
+		</AxClassMemberVariable>
+		<AxClassMemberVariable>
+			<Tags></Tags>
+			<Type>String</Type>
+			<TypeName></TypeName>
+			<Name>ClassName</Name>
+			<Attributes />
+			<IsConst>true</IsConst>
+			<IsStatic>true</IsStatic>
+			<Visibility>Public</Visibility>
+		</AxClassMemberVariable>
+		<AxClassMemberVariable>
+			<Tags></Tags>
+			<Type>String</Type>
+			<TypeName></TypeName>
+			<Name>RetryCount</Name>
+			<Attributes />
+			<IsConst>true</IsConst>
+			<IsStatic>true</IsStatic>
+			<Visibility>Public</Visibility>
+		</AxClassMemberVariable>
+	</Members>
+</z:anyType>

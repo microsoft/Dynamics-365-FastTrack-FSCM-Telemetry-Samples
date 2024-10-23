@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <BuildTasksDirectory Condition=" '$(BuildTasksDirectory)' == ''">$(MSBuildProgramFiles32)\MSBuild\Microsoft\Dynamics\AX</BuildTasksDirectory>
+    <Model>MyModel</Model>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <OutputPath>bin</OutputPath>
+    <SchemaVersion>2.0</SchemaVersion>
+    <GenerateCrossReferences>True</GenerateCrossReferences>
+    <RunAppCheckerRules>False</RunAppCheckerRules>
+    <LogAppcheckerDiagsAsErrors>False</LogAppcheckerDiagsAsErrors>
+    <DeployOnline>False</DeployOnline>
+    <ProjectGuid>{52110f65-6633-4ef8-a6c5-59731c91ccf9}</ProjectGuid>
+    <Name>TelemetrySamplesV2</Name>
+    <RootNamespace>TelemetrySamplesV2</RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <Configuration>Debug</Configuration>
+    <DBSyncInBuild>False</DBSyncInBuild>
+    <GenerateFormAdaptors>False</GenerateFormAdaptors>
+    <Company>
+    </Company>
+    <Partition>initial</Partition>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DataEntityExpandParentChildRelations>False</DataEntityExpandParentChildRelations>
+    <DataEntityUseLabelTextAsFieldName>False</DataEntityUseLabelTextAsFieldName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include="AxClass\MyBatchJob_Extension">
+      <SubType>Content</SubType>
+      <Name>MyBatchJob_Extension</Name>
+      <Link>MyBatchJob_Extension</Link>
+    </Content>
+    <Content Include="AxClass\MyBatch_Extension">
+      <SubType>Content</SubType>
+      <Name>MyBatch_Extension</Name>
+      <Link>MyBatch_Extension</Link>
+    </Content>
+    <Content Include="AxClass\MyTelemetryBase">
+      <SubType>Content</SubType>
+      <Name>MyTelemetryBase</Name>
+      <Link>MyTelemetryBase</Link>
+    </Content>
+    <Content Include="AxClass\MyTelemetryBatch">
+      <SubType>Content</SubType>
+      <Name>MyTelemetryBatch</Name>
+      <Link>MyTelemetryBatch</Link>
+    </Content>
+    <Content Include="AxClass\MyTelemetryEventHandler">
+      <SubType>Content</SubType>
+      <Name>MyTelemetryEventHandler</Name>
+      <Link>MyTelemetryEventHandler</Link>
+    </Content>
+    <Content Include="AxClass\MyTelemetryEventHandlers">
+      <SubType>Content</SubType>
+      <Name>MyTelemetryEventHandlers</Name>
+      <Link>MyTelemetryEventHandlers</Link>
+    </Content>
+    <Content Include="AxClass\MyTelemetryEventIds">
+      <SubType>Content</SubType>
+      <Name>MyTelemetryEventIds</Name>
+      <Link>MyTelemetryEventIds</Link>
+    </Content>
+    <Content Include="AxClass\MyTelemetryEventNames">
+      <SubType>Content</SubType>
+      <Name>MyTelemetryEventNames</Name>
+      <Link>MyTelemetryEventNames</Link>
+    </Content>
+    <Content Include="AxClass\MyTelemetryGeneric">
+      <SubType>Content</SubType>
+      <Name>MyTelemetryGeneric</Name>
+      <Link>MyTelemetryGeneric</Link>
+    </Content>
+    <Content Include="AxClass\MyTelemetryProperties">
+      <SubType>Content</SubType>
+      <Name>MyTelemetryProperties</Name>
+      <Link>MyTelemetryProperties</Link>
+    </Content>
+    <Content Include="AxClass\MyTelemetryProperty">
+      <SubType>Content</SubType>
+      <Name>MyTelemetryProperty</Name>
+      <Link>MyTelemetryProperty</Link>
+    </Content>
+    <Content Include="AxEdt\MyIsEnabled">
+      <SubType>Content</SubType>
+      <Name>MyIsEnabled</Name>
+      <Link>MyIsEnabled</Link>
+    </Content>
+    <Content Include="AxEdt\MyTelemetryClass">
+      <SubType>Content</SubType>
+      <Name>MyTelemetryClass</Name>
+      <Link>MyTelemetryClass</Link>
+    </Content>
+    <Content Include="AxEnum\MyTelemetrySeverityLevel">
+      <SubType>Content</SubType>
+      <Name>MyTelemetrySeverityLevel</Name>
+      <Link>MyTelemetrySeverityLevel</Link>
+    </Content>
+    <Content Include="AxFormExtension\SysIntParameters.My">
+      <SubType>Content</SubType>
+      <Name>SysIntParameters.My</Name>
+      <Link>SysIntParameters.My</Link>
+    </Content>
+    <Content Include="AxLabelFile\My_en-US">
+      <SubType>Content</SubType>
+      <Name>My_en-US</Name>
+      <Link>My_en-US</Link>
+    </Content>
+    <Content Include="AxTable\MyTelemetryParameters">
+      <SubType>Content</SubType>
+      <Name>MyTelemetryParameters</Name>
+      <Link>MyTelemetryParameters</Link>
+    </Content>
+    <Content Include="My.en-US.label.txt">
+      <SubType>Content</SubType>
+      <Name>My.en-US.label.txt</Name>
+      <DependentUpon>AxLabelFile\My_en-US</DependentUpon>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.Common.targets" />
+  <Import Project="$(BuildTasksDirectory)\Microsoft.Dynamics.Framework.Tools.BuildTasks.17.0.targets" />
+</Project>
