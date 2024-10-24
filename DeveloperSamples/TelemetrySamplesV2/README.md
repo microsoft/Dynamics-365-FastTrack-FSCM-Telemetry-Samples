@@ -25,7 +25,7 @@ This project provides sample implementations of telemetry in D365 FSCM. It inclu
 
 ## Installation
 
-1. Close the repository OR download the "MyModel" folder
+1. Clone the repository OR download the "MyModel" folder
 2. Add the MyModel to your PackagesLocalDirectory folder
 3. If you use an UDE environment, you "Configure metadata" and point the folder for Custom metadata to the "XPPCode" folder
    ![image](https://github.com/user-attachments/assets/94915643-3bbd-46a9-8e88-a17842a604d9)
