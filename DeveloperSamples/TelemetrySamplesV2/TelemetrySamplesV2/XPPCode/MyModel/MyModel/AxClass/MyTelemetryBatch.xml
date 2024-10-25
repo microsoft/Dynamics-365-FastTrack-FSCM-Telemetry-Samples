@@ -24,11 +24,6 @@ public class MyTelemetryBatch extends MyTelemetryBase
         super();
         try
         {
-            //make sure logging is not enabled if first time setup
-            if(!logParams)
-            {
-                logParams.IsEnabled = NoYes::No;
-            }
 
             //building in killswitch
             if(this.shouldSkipLogging())
