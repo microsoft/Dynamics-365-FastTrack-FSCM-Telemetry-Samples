@@ -224,6 +224,44 @@ Once you run the report you will see the telemetry like this:
 ![image](https://github.com/user-attachments/assets/bab78d66-a2c2-4dd5-bd31-1019c971d734)
 
 
+
+
+## Class usage and functions 
+
+### UI turn off/on switch for cost savings 
+In the UI you will find a on/off switch which enables you to disable sending telemetry for a specific class. This can be used for cost saving if a class was introduced only for temprary logging. 
+
+![image](https://github.com/user-attachments/assets/ed0aaee8-16cb-41ab-8354-25bf50428fa5)
+
+The "Enabled" will completely enable or disable logging
+The "Severity level" you can define when you are using "processTrace" method to do traces. 
+
+### Types of telemetry
+you will be able to proces different types of telemetry:
+
+- processEvent --> Will process appInsights events into table "customEvents"
+- processTrace --> Will process appInsights traces into table "traces"
+- processMetric --> Will process appInsights metrics into table "customeMetrics"
+
+In most cases the "processEvent" are beeing, depending on the need of the customer. Metrics are working as well but its limited on how many additional dimensions can be used. 
+processTrace should be used if you want to trace a specific processs, e.g. a new functionality where you want to track very detailed at the beginning but want to reduce it once the feature settles down.
+
+### Tracking time in telemetry 
+By default, every time you declare a class like telemetry = new MyTelemetryGeneric(), it will start a .NET stopwatch. Once you do "processEvent", "processTrace" or "processMetric" it will capture the elapsed time and store it automatically as "ElapsedTimeMilliseconds" in your telemetry data. Also it will restart the stopwatch, in case you want to track more data. 
+
+From a data perspective, each appInsights entry will have either the time captured from declaration to event processing or from previous event to current event. 
+
+### 
+
+### Conditional logging shouldLogEvent 
+
+With the overload of the method "shouldLogEvent" you can decide yourself, based on condition if you want to log data or not, this could be a local variable you declared and want to use it to determine to log or not, or it could be something completely for your needs. 
+
+### Post populate properties
+
+the method "postPopulateProperties" is beeing called when you do "processEvent" / "processMetric" / "processTrace". 
+You can enrich data at the point if required. 
+
 ### Adding callStacks
 
 After declaring the class you can use:
@@ -306,15 +344,6 @@ telemetry.clearRuntimeProperties();
 NOTE: 
 When you use "addRuntimeProperty" and use the same Key as a base property or a runtime property it will overwrite and update the values 
 
-
-### Post populate properties
-
-the method "postPopulateProperties" is beeing called when you do "processEvent" / "processMetric" / "processTrace". 
-You can enrich data at the point if required. 
-
-### Conditional event logging
-
-With the overload of the method "shouldLogEvent" you can decide yourself, based on condition if you want to log data or not, this could be a local variable you declared and want to use it to determine to log or not, or it could be something completely for your needs. 
 
 
 
