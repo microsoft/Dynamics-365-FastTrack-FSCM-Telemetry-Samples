@@ -9,6 +9,7 @@ This repository provides samples for utilizing D365 F&amp;O Monitoring and Telem
 - [Configure AppInsights](#Configure-telemetry-logging-in-Finance-&-Operations)
 - [Import Data explorer dashboard](#Configure-Azure-Data-Explorer-dashboard)
 - [Usage](#usage)
+- [Class usage and functions](#class-usage-and-functions)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -345,6 +346,18 @@ NOTE:
 When you use "addRuntimeProperty" and use the same Key as a base property or a runtime property it will overwrite and update the values 
 
 
+## Contributing
 
+We welcome contributions to this project. To contribute:
+
+1. Fork the repository.
+2. Create a new branch for your feature or bugfix.
+3. Make your changes and commit them.
+4. Push your changes to your fork.
+5. Open a pull request to the main repository.
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](../LICENSE) file for more details.
 
    
