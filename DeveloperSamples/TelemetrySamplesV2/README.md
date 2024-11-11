@@ -1,17 +1,6 @@
 # D365-FO-MonitoringAndTelemetry-Samples
 This repository provides samples for utilizing D365 F&amp;O Monitoring and Telemetry feature including batch job monitoring
 
-## Table of Contents
-
-- [Introduction](#introduction)
-- [Prerequisites](#prerequisites)
-- [Installation](#installation)
-- [Configure AppInsights](#Configure-telemetry-logging-in-Finance-&-Operations)
-- [Import Data explorer dashboard](#Configure-Azure-Data-Explorer-dashboard)
-- [Usage](#usage)
-- [Contributing](#contributing)
-- [License](#license)
-
 ## Introduction
 
 This project provides sample implementations of telemetry in D365 FSCM. It includes creation of a telemetry Base class to demonstrate how to utilize SysApplicationInsightsTelemetryLogger to log Events/metrics/traces with properties to ApplicationInsights. It also includes an extension to the MonitoringAndTelemetry module to control the granularity of logging to Application Insights.
