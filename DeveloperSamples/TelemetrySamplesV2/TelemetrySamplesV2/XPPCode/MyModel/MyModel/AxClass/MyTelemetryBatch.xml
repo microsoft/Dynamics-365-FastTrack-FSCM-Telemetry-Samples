@@ -143,6 +143,7 @@ public class MyTelemetryBatch extends MyTelemetryBase
         this.addRuntimeProperty(MyTelemetryProperties::DataAreaId, batchJob.Company);
         this.addRuntimeProperty(MyTelemetryProperties::CreatedBy, batchJob.CreatedBy);
         this.addRuntimeProperty(MyTelemetryProperties::ExecutingBy, batchJob.ExecutingBy);
+        this.addRuntimeProperty(MyTelemetryProperties::SchedulingPriority, enum2Str(batchJob.SchedulingPriority));
 
     }
 

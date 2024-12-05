@@ -225,5 +225,15 @@
 			<IsStatic>true</IsStatic>
 			<Visibility>Public</Visibility>
 		</AxClassMemberVariable>
+		<AxClassMemberVariable>
+			<Tags></Tags>
+			<Type>String</Type>
+			<TypeName></TypeName>
+			<Name>SchedulingPriority</Name>
+			<Attributes />
+			<IsConst>true</IsConst>
+			<IsStatic>true</IsStatic>
+			<Visibility>Public</Visibility>
+		</AxClassMemberVariable>
 	</Members>
 </z:anyType>
