@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxClass xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Name>MyTelemetryEventIds</Name>
+	<SourceCode>
+		<Declaration><![CDATA[
+/// <summary>
+/// Defines EventIds to reuse for telemetry purpose 
+/// </summary>
+public static final class MyTelemetryEventIds
+{
+    public static const str MyEvent                    = '1'; //My event 
+    public static const str MyGenericEvent                   = '2'; //My event 2
+}
+]]></Declaration>
+		<Methods />
+	</SourceCode>
+</AxClass>

@@ -1,0 +1,14 @@
+﻿MyTelemetryClass=Telemetry class
+MyTelemetryGoup=Telemetry
+MyTelemetryIsEnabled=Is Enabled
+MyTelemetryIsEnabledHelp=If disabled, no telemetry called by this class is emitted and will not produce any costs
+MyTelemetryLogSettings=Logging settings
+MyTelemetryParamDevDoc=Class to handle cost savings for app Insights logging
+MyTelemetryParameters=Telemetry parameters
+MyTelemetrySeverityCritical=Critical
+MyTelemetrySeverityError=Error
+MyTelemetrySeverityInformation=Information
+MyTelemetrySeverityLevel=Severity level
+MyTelemetrySeverityLevelHelp=Defines the level of logging, the higher the level the less logging
+MyTelemetrySeverityVerbose=Verbose
+MyTelemetrySeverityWarning=Warning

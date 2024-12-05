@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxClass xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Name>MyBatchJob_Extension</Name>
+	<SourceCode>
+		<Declaration><![CDATA[
+/// <summary>
+/// Extends the Batch job tasks and logs telemetry events for the batch job status updates, for update and insert it will only record cancelled record, and the move to "executing"
+/// Anything else is logged by the eventhandler when it finishes
+/// </summary>
+[ExtensionOf(tableStr(BatchJob))]
+public final class MyBatchJob_Extension
+{
+}
+]]></Declaration>
+		<Methods>
+			<Method>
+				<Name>update</Name>
+				<Source><![CDATA[
+    public void update()
+    {
+        try
+        {
+            if(this.Status != this.orig().Status)
+            {
+                MyTelemetryBatch batch = new MyTelemetryBatch(this.orig(), this);
+                batch.processEvent(MyTelemetryEventNames::BatchJobStatusUpdate);
+            }
+        }
+        catch
+        {
+
+            //do nothing telemetry should not stop the batch job
+        }
+        next update();
+
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>insert</Name>
+				<Source><![CDATA[
+    public void insert()
+    {
+        try
+        {
+            runAsync(classNum(MyTelemetryBatch), staticMethodStr(MyTelemetryBatch, logBatchJobAsync), [this, this, MyTelemetryEventNames::BatchJobCreated]);
+        }
+        catch
+        {
+            //do nothing telemetry should not stop the batch job
+        }
+
+        next insert();
+
+    }
+
+]]></Source>
+			</Method>
+		</Methods>
+	</SourceCode>
+</AxClass>

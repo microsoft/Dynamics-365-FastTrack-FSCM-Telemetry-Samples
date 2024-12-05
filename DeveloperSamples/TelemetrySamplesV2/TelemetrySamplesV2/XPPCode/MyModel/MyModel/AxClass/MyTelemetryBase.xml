@@ -1,0 +1,748 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxClass xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Name>MyTelemetryBase</Name>
+	<SourceCode>
+		<Declaration><![CDATA[
+using DataContracts = Microsoft.ApplicationInsights.DataContracts;
+/// <summary>
+/// Base class for Telemetry
+/// </summary>
+abstract class MyTelemetryBase
+{
+    protected Map basePropertyMap = new Map(Types::String, Types::String);
+    protected Map runtimePropertyMap = new Map(Types::String, Types::String);
+
+    System.Diagnostics.Stopwatch stopWatch = new System.Diagnostics.Stopwatch();
+
+    protected MyTelemetryParameters logParams;
+
+    //you can fill this field or not, if you dont fill it, it will be set to 0
+    protected str eventId;
+
+}
+]]></Declaration>
+		<Methods>
+			<Method>
+				<Name>new</Name>
+				<Source><![CDATA[
+    protected void new()
+    {
+        stopWatch = new System.Diagnostics.Stopwatch();
+        stopWatch.Start();
+
+        logParams = MyTelemetryParameters::find(this.telemetryName());
+
+        if(!logParams)
+        {
+            logParams.TelemetryClass = this.telemetryName();
+            logParams.IsEnabled = NoYes::Yes;
+            logParams.SeverityLevel = MyTelemetrySeverityLevel::Information;
+        }
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>processMetric</Name>
+				<Source><![CDATA[
+    /// <summary>
+    /// Method ProcessMetric
+    /// </summary>
+    /// <param name = "_value"> Value of the metric </param>
+    public final void processMetric(real _value)
+    {
+        try
+        {
+            this.logMetric(_value);
+        }
+        catch
+        {
+            warning(strFmt("Telemetry Metric Processing Error - className : %1",classId2Name(classIdGet(this))));
+        }
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>addStandardProperties</Name>
+				<Source><![CDATA[
+    /// <summary>
+    ///  adds standard properties to the telemetry
+    /// </summary>
+    protected void addStandardProperties()
+    {
+        try
+        {
+
+            this.addBaseProperty(MyTelemetryProperties::CurrentUserId,curUserId());
+            this.addBaseProperty(MyTelemetryProperties::DataAreaId,curExt());
+
+            BatchHeader currentHeader   = BatchHeader::getCurrentBatchHeader();
+            Batch       currentTask     =   BatchHeader::getCurrentBatchTask();
+
+            if(currentHeader)
+            {
+                this.addBaseProperty(MyTelemetryProperties::BatchJobId, int642Str(currentHeader.parmBatchHeaderId()));
+                this.addBaseProperty(MyTelemetryProperties::BatchCaption, currentHeader.parmCaption());
+            }
+
+            if(currentTask)
+            {
+                this.addBaseProperty(MyTelemetryProperties::BatchJobTaskId, int642Str(currentTask.RecId));
+            }
+        }
+        catch
+        {
+            warning(strFmt("Telemetry Add Standard Properties Error - className : %1",classId2Name(classIdGet(this))));
+        }
+        
+    
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>addCallStack</Name>
+				<Source><![CDATA[
+    /// <summary>
+    ///  Adds the call stack to the telemetry
+    /// </summary>
+    public void addCallStack()
+    {
+        try
+        {
+            container myCallStack;
+            int i;
+            str callStackStr;
+
+            ;
+
+            myCallStack = xSession::xppCallStack();
+            for(i=1; i<=conlen(myCallStack); i++)
+            {
+                callStackStr += conpeek(myCallStack, i);
+            }
+
+            this.addRuntimeProperty(MyTelemetryProperties::CallStack, callStackStr);
+
+        }
+        catch
+        {
+            warning(strFmt("Telemetry Add Call Stack Error - className : %1",classId2Name(classIdGet(this))));
+        }
+        
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>addBaseProperty</Name>
+				<Source><![CDATA[
+    /// <summary>
+    /// Adds the base property to the telemetry
+    /// </summary>
+    /// <param name = "key"> Key of the property </param>
+    /// <param name = "value"> Value of the property </param>
+    /// <param name = "compressData"> Compress data </param>
+    ///
+    protected void addBaseProperty(str key, str value, boolean compressData = false)
+    {
+        try
+        {
+            if(compressData)
+            {
+                this.compressData(key, value, true);
+            }
+            else
+            {
+                basePropertyMap.insert(key, value);
+            }
+        }
+        catch
+        {
+            warning(strFmt("Telemetry Add Runtime Property Error - className : %1",classId2Name(classIdGet(this))));
+        }
+  
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>addRuntimeProperty</Name>
+				<Source><![CDATA[
+    /// <summary>
+    /// Adds the runtime property to the telemetry
+    /// </summary>
+    /// <param name = "key"> Key of the property </param>
+    /// <param name = "value"> Value of the property </param>
+    /// <param name = "compressData"> Compress data </param>
+    public void addRuntimeProperty(str key, str value, boolean compressData = false)
+    {
+        //find the old property:
+        //check if theres a base property and update that one with the new value
+        // If you want to have always a property present in the telemetry, you declare it as base property but can then "addRuntimeProperty" to update it if in the
+        // process the property is supposed to change
+
+        try
+        {
+            if(basePropertyMap.exists(key))
+            {
+                this.addBaseProperty(key, value, compressData);
+            }
+            else
+            {
+                if(compressData)
+                {
+                    this.compressData(key, value, false);
+                }
+                else
+                {
+                    runtimePropertyMap.insert(key, value);
+                }
+                
+            }
+        }
+        catch
+        {
+            warning(strFmt("Telemetry Add Runtime Property Error - className : %1",classId2Name(classIdGet(this))));
+        }
+        
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>compressData</Name>
+				<Source><![CDATA[
+    /// <summary>
+    /// Compresses the string data and logs it.
+    /// </summary>
+    /// <param name = "_proprty">Property name</param>
+    /// <param name = "_data">data</param>
+    /// <param name = "isBaseProperty">is base property</param>
+    private void compressData(str _proprty, str _data, boolean isBaseProperty)
+    {
+        try
+        {
+            System.String inputString = _data;
+            System.IO.MemoryStream memoryStream = new System.IO.MemoryStream();
+            System.IO.Compression.GZipStream gzip = new System.IO.Compression.GZipStream(memoryStream, System.IO.Compression.CompressionMode::Compress);
+            System.Text.Encoding utf8 = System.Text.Encoding::get_UTF8();
+            System.Byte[] byteArray = utf8.GetBytes(inputString);
+    
+            gzip.Write(byteArray, 0, byteArray.get_Length());
+            gzip.Close();
+    
+            byteArray = memoryStream.ToArray();
+    
+            // Optionally convert to base64 for easier handling
+            str compressedBase64 = System.Convert::ToBase64String(byteArray);
+    
+            memoryStream.Dispose();
+            gzip.Dispose();
+    
+            this.SplitAndProcessString(_proprty, compressedBase64, isBaseProperty);
+        }
+        //in case of any failue, add the data as is
+        catch
+        {
+            if(isBaseProperty)
+            {
+                basePropertyMap.insert(_proprty, _data);
+            }
+            else
+            {
+                runtimePropertyMap.insert(_proprty, _data);
+            }
+        }
+
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>SplitAndProcessString</Name>
+				<Source><![CDATA[
+    /// <summary>
+    /// Splits the string into chunks and logs it.
+    /// </summary>
+    /// <param name = "_proprty">Property</param>
+    /// <param name = "_data">Data</param>
+    /// <param name = "isBaseProperty">Is base property</param>
+    ///
+    private void SplitAndProcessString(str _proprty, str _data, boolean isBaseProperty)
+    {
+        
+        int startPosition = 1;
+        int chunkLength = 8000;
+        int remainingLength;
+        str chunk;
+        int i = 1;
+
+        //check if a split is needed at all
+        if(strLen(_data) <= chunkLength)
+        {
+            if(isBaseProperty)
+            {
+                basePropertyMap.insert(_proprty, _data);
+            }
+            else
+            {
+                runtimePropertyMap.insert(_proprty, _data);
+            }
+            return;
+        }
+    
+        while (startPosition <= strLen(_data))
+        {
+            // Calculate the remaining length of the string
+            remainingLength = strLen(_data) - startPosition + 1;
+        
+            // Determine the length of the current chunk
+            if (remainingLength < chunkLength)
+            {
+                chunkLength = remainingLength;
+            }
+        
+            // Extract a substring of the determined length from the original string
+            chunk = substr(_data, startPosition, chunkLength);
+        
+            
+        
+            // Move the start position for the next chunk
+            startPosition += chunkLength;
+
+            //add the values to the map
+            if(isBaseProperty)
+            {
+                basePropertyMap.insert(strFmt("%1%2", _proprty, i), chunk);
+            }
+            else
+            {
+                runtimePropertyMap.insert(strFmt("%1%2", _proprty, i), chunk);
+            }
+            
+
+        }
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>setElapsedMilliseconds</Name>
+				<Source><![CDATA[
+    /// <summary>
+    /// Calculates the elapsed milliseconds and adds it to the telemetry
+    /// </summary>
+    protected void setElapsedMilliseconds()
+    {
+        // Get the elapsed milliseconds without stopping the stopwatch
+        int64 elapsedMilliseconds = stopwatch.get_ElapsedMilliseconds();
+        this.addRuntimeProperty(MyTelemetryProperties::ElapsedMilliseconds, int642str(elapsedMilliseconds));
+        stopWatch.Restart();
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>clearRuntimeProperties</Name>
+				<Source><![CDATA[
+    /// <summary>
+    /// Clears runtime properties
+    /// </summary>
+    public void clearRuntimeProperties()
+    {
+        try
+        {
+            runtimePropertyMap = new Map(Types::String, Types::String);
+        }
+        catch
+        {
+            warning(strFmt("Telemetry Clear Runtime Properties Error - className : %1",classId2Name(classIdGet(this))));
+        }
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>shouldSkipLogging</Name>
+				<Source><![CDATA[
+    /// <summary>
+    /// Validates if telemetry should be logged
+    /// </summary>
+    /// <returns>bool wheter to log telemetry or not</returns>
+    internal boolean shouldSkipLogging()
+    {
+        if(!this.shouldLogEvent())
+        {
+            return true;
+        }
+
+        if(!logParams.IsEnabled)
+        {
+            return true;
+        }
+
+        
+
+        return false;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>shouldSkipOnSeverityLevel</Name>
+				<Source><![CDATA[
+    /// <summary>
+    /// Validates if telemetry should be logged based on severity level
+    /// </summary>
+    /// <param name = "severity"> Severity level </param>
+    /// <returns>bool wheter to log telemetry or not</returns>
+    private boolean shouldSkipOnSeverityLevel(MyTelemetrySeverityLevel severity)
+    {
+
+        if(logParams.SeverityLevel > severity)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>processEvent</Name>
+				<Source><![CDATA[
+    /// <summary>
+    /// Method processEvent
+    /// </summary>
+    /// <param name = "_name"> Name of the event </param>
+    public final void processEvent(str _name = '')
+    {
+        try
+        {
+            str name = _name;
+            if(this.shouldSkipLogging())
+            {
+                return;
+            }
+
+            if(!name)
+            {
+                name = this.telemetryName();
+            }
+
+            this.addStandardProperties();
+            this.setElapsedMilliseconds();
+            this.postPopulateProperties();
+            this.logEvent(this.eventId, name);
+        }
+        catch
+        {
+            warning(strFmt("Telemetry Event Processing Error: className : %1 - EventName: %2", classId2Name(classIdGet(this)), _name));
+        }
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>telemetryName</Name>
+				<Source><![CDATA[
+    /// <summary>
+    /// Class telemetryName
+    /// </summary>
+    /// <returns>Telemetry</returns>
+    protected ClassName telemetryName()
+    {
+        return classId2Name(classIdGet(this));
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>processTrace</Name>
+				<Source><![CDATA[
+    /// <summary>
+    /// Method processTrace
+    /// </summary>
+    /// <param name = "traceMessage"> Message of the trace </param>
+    /// <param name = "severity"> Severity of the trace </param>
+    public final void processTrace(str traceMessage, MyTelemetrySeverityLevel severity = MyTelemetrySeverityLevel::Information)
+    {
+        try
+        {
+            if(this.shouldSkipLogging())
+            {
+                return;
+            }
+
+            if(this.shouldSkipOnSeverityLevel(severity))
+            {
+                return;
+            }
+
+            this.addStandardProperties();
+            this.setElapsedMilliseconds();
+            this.postPopulateProperties();
+            this.logTrace(traceMessage, severity);
+        }
+        catch
+        {
+            warning(strFmt("Telemetry Trace Processing Error: className : %1 - TraceMessage: %2", classId2Name(classIdGet(this)), traceMessage));
+        }
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>postPopulateProperties</Name>
+				<Source><![CDATA[
+    /// <summary>
+    /// Method Populate properties. This housld be implemented by the concrete class that extends this base.
+    /// </summary>
+    protected abstract void postPopulateProperties()
+    {
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>metricName</Name>
+				<Source><![CDATA[
+    /// <summary>
+    /// Class metricName
+    /// </summary>
+    /// <returns>Telemetry</returns>
+    protected ClassName metricName()
+    {
+        return classId2Name(classIdGet(this));
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>logMetric</Name>
+				<Source><![CDATA[
+    /// <summary>
+    /// Logs a metric
+    /// </summary>
+    /// <param name="_value">Value of the metric</param>
+    protected void logMetric(real _value)
+    {
+        SysApplicationInsightsTelemetryLogger::instance().trackMetric(this.metricName(), _value);
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>logMetricWithDimensions</Name>
+				<Source><![CDATA[
+    /// <summary>
+    /// Logs a metric with dimensions
+    /// </summary>
+    /// <param name="_value">Value of the metric</param>
+    /// <param name="_dimension1Name">Name of the first dimension</param>
+    /// <param name="_dimension1Value">Value of the first dimension</param>
+    /// <param name="_dimension2Name">Name of the second dimension</param>
+    /// <param name="_dimension2Value">Value of the second dimension</param>
+    /// <param name="_dimension3Name">Name of the third dimension</param>
+    /// <param name="_dimension3Value">Value of the third dimension</param>
+    protected void logMetricWithDimensions(real _value, str _dimension1Name, str _dimension1Value, str _dimension2Name = '', str _dimension2Value = '', str _dimension3Name = '', str _dimension3Value = '')
+    {
+        SysApplicationInsightsTelemetryLogger::instance().trackMetricWithDimensions(this.metricName(), _value, _dimension1Name, _dimension1Value, _dimension2Name, _dimension2Value, _dimension3Name, _dimension3Value);
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>logEvent</Name>
+				<Source><![CDATA[
+    /// <summary>
+    /// Method Log
+    /// </summary>
+    /// <param name = "_eventId"> Event Id </param>
+    /// <param name = "_name"> Name of the event </param>
+    protected void logEvent(str _eventId, str _name )
+    {
+        SysApplicationInsightsEventTelemetry eventTelemetry = SysApplicationInsightsEventTelemetry::newFromEventIdName(_eventId, _name);
+
+        MapIterator iterator;
+        str key, value;
+
+
+        // Get an iterator for the map
+        iterator = new MapIterator(basePropertyMap);
+
+        // Loop through the map & add base properties
+        while (iterator.more())
+        {
+            key = iterator.key();
+            value = iterator.value();
+            
+            MyTelemetryProperty property = new MyTelemetryProperty(key, value, SysApplicationInsightsComplianceDataType::CustomerContent);
+            eventTelemetry.addProperty(property);
+            iterator.next();
+        }
+
+
+        //add runtime properties:
+        iterator = new MapIterator(runtimePropertyMap);
+
+        // Loop through the map & add base properties
+        while (iterator.more())
+        {
+            key = iterator.key();
+            value = iterator.value();
+            
+            MyTelemetryProperty property = new MyTelemetryProperty(key, value, SysApplicationInsightsComplianceDataType::CustomerContent);
+            eventTelemetry.addProperty(property);
+            iterator.next();
+        }
+
+        SysApplicationInsightsTelemetryLogger::instance().trackEvent(eventTelemetry);
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>shouldLogEvent</Name>
+				<Source><![CDATA[
+    /// <summary>
+    /// Enables implement custom conditions for e.g. events for the customer to use to save costs, or log events conditionally!
+    /// If this one is implemented it will always win over the logEvent method
+    /// </summary>
+    /// <returns>bool wheter to log the event or not</returns>
+    protected abstract boolean shouldLogEvent()
+    {
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>logTrace</Name>
+				<Source><![CDATA[
+    /// <summary>
+    /// Method Log
+    /// </summary>
+    /// <param name = "traceMessage"> Message of the trace </param>
+    /// <param name = "severity"> Severity of the trace </param>
+    protected void logTrace(str traceMessage, MyTelemetrySeverityLevel severity = MyTelemetrySeverityLevel::Information)
+    {
+
+        DataContracts.SeverityLevel dotNetSeverity;
+        switch(severity)
+        {
+            case MyTelemetrySeverityLevel::Critical:
+                dotNetSeverity = DataContracts.SeverityLevel::Critical;
+                break;
+            case MyTelemetrySeverityLevel::Error:
+                dotNetSeverity = DataContracts.SeverityLevel::Error;
+                break;
+            case MyTelemetrySeverityLevel::Warning:
+                dotNetSeverity = DataContracts.SeverityLevel::Warning;
+                break;
+            case MyTelemetrySeverityLevel::Information:
+                dotNetSeverity = DataContracts.SeverityLevel::Information;
+                break;
+            case MyTelemetrySeverityLevel::Verbose:
+                dotNetSeverity = DataContracts.SeverityLevel::Verbose;
+                break;
+            default:
+                dotNetSeverity = DataContracts.SeverityLevel::Information;
+                break;
+        }
+
+
+        SysApplicationInsightsTraceTelemetry traceTelemetry = SysApplicationInsightsTraceTelemetry::newFromEventIdName(traceMessage, dotNetSeverity);
+
+        MapIterator iterator;
+        str key, value;
+        // Iterate through the list and add to traceTelemetry
+        // Get an iterator for the map
+        iterator = new MapIterator(basePropertyMap);
+
+        // Loop through the map & add base properties
+        while (iterator.more())
+        {
+            key = iterator.key();
+            value = iterator.value();
+            
+            MyTelemetryProperty property = new MyTelemetryProperty(key, value, SysApplicationInsightsComplianceDataType::CustomerContent);
+            traceTelemetry.addProperty(property);
+            iterator.next();
+        }
+
+
+        //add runtime properties:
+        iterator = new MapIterator(runtimePropertyMap);
+
+        // Loop through the map & add base properties
+        while (iterator.more())
+        {
+            key = iterator.key();
+            value = iterator.value();
+            
+            MyTelemetryProperty property = new MyTelemetryProperty(key, value, SysApplicationInsightsComplianceDataType::CustomerContent);
+            traceTelemetry.addProperty(property);
+            iterator.next();
+        }
+
+        SysApplicationInsightsTelemetryLogger::instance().trackTrace(traceTelemetry);
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>logException</Name>
+				<Source><![CDATA[
+    /// <summary>
+    /// Method Log
+    /// </summary>
+    /// <param name = "message"> Message of the exception </param>
+    protected void logException(str message)
+    {
+        SysApplicationInsightsExceptionTelemetry exceptionTelemetry = SysApplicationInsightsExceptionTelemetry::newFromExceptionMessage(message);
+
+        MapIterator iterator;
+        str key, value;
+
+
+        // Get an iterator for the map
+        iterator = new MapIterator(basePropertyMap);
+
+        // Loop through the map & add base properties
+        while (iterator.more())
+        {
+            key = iterator.key();
+            value = iterator.value();
+            
+            MyTelemetryProperty property = new MyTelemetryProperty(key, value, SysApplicationInsightsComplianceDataType::CustomerContent);
+            exceptionTelemetry.addProperty(property);
+            iterator.next();
+        }
+
+
+        //add runtime properties:
+        iterator = new MapIterator(runtimePropertyMap);
+
+        // Loop through the map & add base properties
+        while (iterator.more())
+        {
+            key = iterator.key();
+            value = iterator.value();
+            
+            MyTelemetryProperty property = new MyTelemetryProperty(key, value, SysApplicationInsightsComplianceDataType::CustomerContent);
+            exceptionTelemetry.addProperty(property);
+            iterator.next();
+        }
+
+
+        SysApplicationInsightsTelemetryLogger::instance().trackException(exceptionTelemetry);
+    }
+
+]]></Source>
+			</Method>
+		</Methods>
+	</SourceCode>
+</AxClass>

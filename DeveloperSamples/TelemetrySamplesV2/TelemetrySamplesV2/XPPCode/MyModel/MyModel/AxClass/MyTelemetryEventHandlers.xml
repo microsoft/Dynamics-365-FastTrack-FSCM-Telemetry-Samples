@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxClass xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Name>MyTelemetryEventHandlers</Name>
+	<SourceCode>
+		<Declaration><![CDATA[
+/// <summary>
+/// Used for Eventhandlers for telemetry events
+/// </summary>
+internal final class MyTelemetryEventHandlers
+{
+}
+]]></Declaration>
+		<Methods>
+			<Method>
+				<Name>BatchRunBusinessEvents_emitJobEndBusinessEventsUsingBatchJobUpdateTmpDelegate</Name>
+				<Source><![CDATA[
+    ///<summary>
+    ///Jobs moving into state finished beeing logged in telemetry
+    ///</summary>
+    ///<param name="jobsToUpdate">The batch jobs to update</param>
+    [SubscribesTo(classStr(BatchRunBusinessEvents), delegateStr(BatchRunBusinessEvents, emitJobEndBusinessEventsUsingBatchJobUpdateTmpDelegate))]
+    public static void BatchRunBusinessEvents_emitJobEndBusinessEventsUsingBatchJobUpdateTmpDelegate(BatchJobUpdateTmp jobsToUpdate)
+    {
+
+        while select jobsToUpdate
+        {
+            BatchJob job;
+
+            select firstonly * from job where job.RecId == jobsToUpdate.BatchJobId;
+
+            try
+            {
+                MyTelemetryBatch batch = new MyTelemetryBatch(job.orig(), job, jobsToUpdate);
+                batch.processEvent(MyTelemetryEventNames::BatchJobStatusUpdate);
+            }
+            catch
+            {
+                // Do nothing telemetry should not stop the batch job
+            }
+        }
+
+    }
+
+]]></Source>
+			</Method>
+		</Methods>
+	</SourceCode>
+</AxClass>

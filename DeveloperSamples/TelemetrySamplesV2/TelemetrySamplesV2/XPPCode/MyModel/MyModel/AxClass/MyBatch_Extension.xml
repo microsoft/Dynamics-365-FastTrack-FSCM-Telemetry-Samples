@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxClass xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Name>MyBatch_Extension</Name>
+	<SourceCode>
+		<Declaration><![CDATA[
+/// <summary>
+/// Extends the Batch table to send telemetry when the status of the batch is updated
+/// </summary>
+[ExtensionOf(tableStr(Batch))]
+public final class MyBatch_Extension
+{
+
+}
+]]></Declaration>
+		<Methods>
+			<Method>
+				<Name>update</Name>
+				<Source><![CDATA[
+    public void update()
+    {
+
+        try
+        {
+            if(this.Status != this.orig().Status)
+            {
+                MyTelemetryBatch batch = new MyTelemetryBatch(this.orig(), this);
+                batch.processEvent(MyTelemetryEventNames::BatchStatusUpdate);
+            }
+        }
+        catch
+        {
+            //Do nothing, telemetry should not stop the process
+        }
+
+
+
+        next update();
+
+    }
+
+]]></Source>
+			</Method>
+		</Methods>
+	</SourceCode>
+</AxClass>

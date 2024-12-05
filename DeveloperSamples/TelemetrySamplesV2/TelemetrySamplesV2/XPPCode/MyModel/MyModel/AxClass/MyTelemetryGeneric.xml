@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxClass xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Name>MyTelemetryGeneric</Name>
+	<SourceCode>
+		<Declaration><![CDATA[
+/// <summary>
+/// Generic telemetry class for My model
+/// </summary>
+class MyTelemetryGeneric extends MyTelemetryBase
+
+{
+}
+]]></Declaration>
+		<Methods>
+			<Method>
+				<Name>new</Name>
+				<Source><![CDATA[
+    public void new()
+    {
+        super();
+        
+        this.eventId = MyTelemetryEventIds::MyEvent;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>shouldLogEvent</Name>
+				<Source><![CDATA[
+    // if the log level is set to information it will log the request and response data as wekk as there is an error
+    protected boolean shouldLogEvent()
+    {
+        return true;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>postPopulateProperties</Name>
+				<Source><![CDATA[
+    protected void postPopulateProperties()
+    {
+    }
+
+]]></Source>
+			</Method>
+		</Methods>
+	</SourceCode>
+</AxClass>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxClass xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Name>MyTelemetryEventNames</Name>
+	<SourceCode>
+		<Declaration><![CDATA[
+/// <summary>
+/// Defines Telemetry event names logged into AppInsights
+/// </summary>
+public final class MyTelemetryEventNames
+{
+    public static const str MyEventName                         = 'MyEventName';
+    public static const str BatchJobStatusUpdate                = 'BatchJobStatusUpdate';
+    public static const str BatchJobCreated                     = 'BatchJobCreated';
+    public static const str BatchStatusUpdate                   = 'BatchStatusUpdate';
+
+}
+]]></Declaration>
+		<Methods />
+	</SourceCode>
+</AxClass>
