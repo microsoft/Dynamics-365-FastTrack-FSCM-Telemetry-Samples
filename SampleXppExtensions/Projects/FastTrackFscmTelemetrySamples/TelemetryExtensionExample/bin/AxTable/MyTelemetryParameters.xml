@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxTable xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Name>MyTelemetryParameters</Name>
+	<SourceCode>
+		<Declaration>
+			<![CDATA[
+public class MyTelemetryParameters extends common
+{
+}
+]]>
+		</Declaration>
+		<Methods>
+			<Method>
+				<Name>find</Name>
+				<Source>
+					<![CDATA[
+    public static MyTelemetryParameters find(
+        MyTelemetryClass _class,
+        boolean   _forupdate = false)
+    {
+        MyTelemetryParameters    param;
+
+        if (_class)
+        {
+            param.selectForUpdate(_forupdate);
+           
+
+            select firstonly param
+                where param.TelemetryClass == _class;
+        }
+
+        return param;
+    }
+
+]]>
+				</Source>
+			</Method>
+		</Methods>
+	</SourceCode>
+	<Label>
+		MyTelemetryParameters
+	</Label>
+	<SubscriberAccessLevel>
+		<Read>Allow</Read>
+	</SubscriberAccessLevel>
+	<TitleField1>TelemetryClass</TitleField1>
+	<AllowRowVersionChangeTracking>Yes</AllowRowVersionChangeTracking>
+	<CacheLookup>FoundAndEmpty</CacheLookup>
+	<DeleteActions />
+	<FieldGroups>
+		<AxTableFieldGroup>
+			<Name>AutoReport</Name>
+			<Fields />
+		</AxTableFieldGroup>
+		<AxTableFieldGroup>
+			<Name>AutoLookup</Name>
+			<Fields />
+		</AxTableFieldGroup>
+		<AxTableFieldGroup>
+			<Name>AutoIdentification</Name>
+			<AutoPopulate>Yes</AutoPopulate>
+			<Fields />
+		</AxTableFieldGroup>
+		<AxTableFieldGroup>
+			<Name>AutoSummary</Name>
+			<Fields />
+		</AxTableFieldGroup>
+		<AxTableFieldGroup>
+			<Name>AutoBrowse</Name>
+			<Fields />
+		</AxTableFieldGroup>
+		<AxTableFieldGroup>
+			<Name>TelemetryFields</Name>
+			<Fields>
+				<AxTableFieldGroupField>
+					<DataField>TelemetryClass</DataField>
+				</AxTableFieldGroupField>
+				<AxTableFieldGroupField>
+					<DataField>IsEnabled</DataField>
+				</AxTableFieldGroupField>
+				<AxTableFieldGroupField>
+					<DataField>SeverityLevel</DataField>
+				</AxTableFieldGroupField>
+			</Fields>
+		</AxTableFieldGroup>
+	</FieldGroups>
+	<Fields>
+		<AxTableField xmlns=""
+			i:type="AxTableFieldString">
+			<Name>TelemetryClass</Name>
+			<ExtendedDataType>MyTelemetryClass</ExtendedDataType>
+			<IgnoreEDTRelation>Yes</IgnoreEDTRelation>
+		</AxTableField>
+		<AxTableField xmlns=""
+			i:type="AxTableFieldEnum">
+			<Name>IsEnabled</Name>
+			<EnumType>NoYes</EnumType>
+		</AxTableField>
+		<AxTableField xmlns=""
+			i:type="AxTableFieldEnum">
+			<Name>SeverityLevel</Name>
+			<EnumType>MyTelemetrySeverityLevel</EnumType>
+		</AxTableField>
+	</Fields>
+	<FullTextIndexes />
+	<Indexes>
+		<AxTableIndex>
+			<Name>TelemetryClass</Name>
+			<Fields>
+				<AxTableIndexField>
+					<DataField>TelemetryClass</DataField>
+				</AxTableIndexField>
+			</Fields>
+		</AxTableIndex>
+	</Indexes>
+	<Mappings />
+	<Relations />
+	<StateMachines />
+</AxTable>

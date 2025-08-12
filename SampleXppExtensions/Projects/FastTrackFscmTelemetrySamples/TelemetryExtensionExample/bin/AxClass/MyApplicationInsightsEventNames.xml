@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxClass xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Name>MyApplicationInsightsEventNames</Name>
+	<SourceCode>
+		<Declaration><![CDATA[
+internal final class MyApplicationInsightsEventNames
+{
+    internal static const str WHSShipConfirm                    = 'My_CompanysShipConfirmCodeExecutedSuccessfully'; // eventName to indicate WHS ship confirm. Add more explanation to indicate the eventname here.
+    internal static const str DMFDefinitionGroupExecutionHistory= 'My_Companys_DMFExceutionHistory'; // eventName to indicate DMFExceutionHistory. Add more explanation to indicate the eventname here.
+}
+]]></Declaration>
+		<Methods />
+	</SourceCode>
+</AxClass>
