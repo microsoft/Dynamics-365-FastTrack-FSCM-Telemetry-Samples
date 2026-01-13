@@ -6,6 +6,8 @@
 | Slow queries | Slow queries reported by the AOS.     | [Slow Queries](SlowQueries) |
 | Form usage | Form usage telemetry.     | [Form Usage](Forms) |
 | Errors       | Errors reported by the envioronments. |  [Errors](Errors) |
+| Batch | Batch telemetry signals from the environment. | [Batch](Batch)|
+| DMF | Data Management framewor telemetry. | [DMF](DMF) |
 
 ## Steps to import the sample dashboard:
   1. Import the file (e.g "ADE-Dashboard-D365FO-Monitoring-SlowQueries.json").
