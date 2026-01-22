@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxClass xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Name>WhsShipConfirm_Extension</Name>
+	<SourceCode>
+		<Declaration><![CDATA[
+/// <summary>
+/// Extension for the class <c>WhsShipConfirm</c>.
+/// </summary>
+[ExtensionOf(classStr(WhsShipConfirm))]
+final class WhsShipConfirm_Extension
+{
+}
+]]></Declaration>
+		<Methods>
+			<Method>
+				<Name>shipConfirm</Name>
+				<Source><![CDATA[
+    /// <summary>
+    /// Wrapper to WhsShipConfirm.shipConfirm(WHSLoadId loadId). Insert your logic around shipConfirm here.
+    /// </summary>
+    /// <param name = "loadId"> loadId value </param>
+    public void shipConfirm(WHSLoadId loadId)
+    {
+        // Generate telemetry after the shipConfirm operation
+        WHSLoadTable loadTable = WHSLoadTable::find(loadId);
+        var telemetry = new TelemetryShipConfirm(loadTable);
+
+        try
+        {
+            // Call the original shipConfirm method
+            next shipConfirm(loadId);
+        }
+        catch (Exception::Deadlock)
+        {
+            retry;
+        }
+        catch (Exception::UpdateConflict)
+        {
+            if (appl.ttsLevel() == 0)
+            {
+                // Define the retry count globally.
+                var retryCount = 3;
+                if (xSession::currentRetryCount() >= retryCount)
+                {
+                    throw Exception::UpdateConflictNotRecovered;
+                }
+                else
+                {
+                    retry;
+                }
+            }
+            else
+            {
+                throw Exception::UpdateConflict;
+            }
+        }
+        catch (Exception::Error)
+        {
+            throw Exception::Error;
+        }
+
+        telemetry.processEvent(MyApplicationInsightsEventNames::WHSShipConfirm);
+    }
+
+]]></Source>
+			</Method>
+		</Methods>
+	</SourceCode>
+</AxClass>

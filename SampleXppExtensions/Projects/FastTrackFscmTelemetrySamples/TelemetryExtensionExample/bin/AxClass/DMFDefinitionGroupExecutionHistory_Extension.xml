@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxClass xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Name>DMFDefinitionGroupExecutionHistory_Extension</Name>
+	<SourceCode>
+		<Declaration><![CDATA[
+/// <summary>
+/// <c>DMFDefinitionGroupExecutionHistory_Extension</c> Table extension
+/// </summary>
+[ExtensionOf(tableStr(DMFDefinitionGroupExecutionHistory))]
+final class DMFDefinitionGroupExecutionHistory_Extension
+{
+}
+]]></Declaration>
+		<Methods>
+			<Method>
+				<Name>insertExecutionHistory</Name>
+				<Source><![CDATA[
+    /// <summary>
+    /// Insert execution history
+    /// </summary>
+    /// <param name = "_definitionGroupExecution"><c>DMFDefinitionGroupExecution</c> record</param>
+    public void insertExecutionHistory(DMFDefinitionGroupExecution  _definitionGroupExecution)
+    {
+        next insertExecutionHistory(_definitionGroupExecution);
+
+        DMFDefinitionGroupExecution         dmfDefinitionGroupExecution         = DMFDefinitionGroupExecution::find(_definitionGroupExecution.DefinitionGroup,_definitionGroupExecution.Entity,_definitionGroupExecution.ExecutionId);
+        DMFDefinitionGroupExecutionHistory  dmfDefinitionGroupExecutionHistory  = DMFDefinitionGroupExecutionHistory::find(dmfDefinitionGroupExecution.DefinitionGroup, dmfDefinitionGroupExecution.Entity,
+                                                                                      dmfDefinitionGroupExecution.ExecutionId, dmfDefinitionGroupExecution.WriteStartDateTime, true);
+        
+        // Add any other conditions to log only for the entities you want here.
+        if (dmfDefinitionGroupExecutionHistory.RecId)
+        {
+            new TelemetryDataManagementImport(dmfDefinitionGroupExecutionHistory.WriteStartDateTime, dmfDefinitionGroupExecutionHistory.WriteEndDateTime, dmfDefinitionGroupExecutionHistory).processEvent(MyApplicationInsightsEventNames::DMFDefinitionGroupExecutionHistory);
+        }
+    }
+
+]]></Source>
+			</Method>
+		</Methods>
+	</SourceCode>
+</AxClass>

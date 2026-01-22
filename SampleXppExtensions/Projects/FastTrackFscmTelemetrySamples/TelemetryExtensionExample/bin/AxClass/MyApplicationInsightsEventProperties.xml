@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxClass xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Name>MyApplicationInsightsEventProperties</Name>
+	<SourceCode>
+		<Declaration><![CDATA[
+/// <summary>
+/// The <c>MyApplicationInsightsEventProperties</c> class contains all available event properties that can be used in the Application Insights telemetry.
+/// </summary>
+/// <remarks>
+/// The names must be unique.
+/// Please keep the list sorted alphabetically in ascending order.
+/// </remarks>
+internal static final class MyApplicationInsightsEventProperties
+{
+    internal static const str InventLocationId                    = 'inventLocationId';
+    internal static const str LoadId                              = 'loadId';
+    internal static const str LoadStatus                          = 'loadStatus';
+    internal static const str NumOfLines                          = 'numOfLines';
+    internal static const str SalesId                             = 'salesId';
+    internal static const str CustAccount                         = 'custAccount';
+    internal static const str SalesStatus                         = 'salesStatus';
+    internal static const str DeliveryDate                        = 'deliveryDate';
+    internal static const str PurchId                             = 'PurchId';
+    internal static const str VendorName                          = 'vendorName';
+    internal static const str PurchStatus                         = 'PurchStatus';
+    internal static const str ElapsedMilliseconds                 = 'ElapsedMilliseconds';
+    internal static const str DefinitionGroup                     = 'DefinitionGroup';
+    internal static const str Entity                              = 'Entity';
+    internal static const str ExecutionId                         = 'ExecutionId';
+    internal static const str NoOfRecords                         = 'NoOfRecords';
+    internal static const str NumOfTargetNew                      = 'NumOfTargetNew';
+    internal static const str NumOfTargetUpdated                  = 'NumOfTargetUpdated';
+
+}
+]]></Declaration>
+		<Methods />
+	</SourceCode>
+</AxClass>
