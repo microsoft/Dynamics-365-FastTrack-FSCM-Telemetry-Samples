@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxClass xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Name>TelemetryShipConfirm</Name>
+	<SourceCode>
+		<Declaration><![CDATA[
+/// <summary>
+/// TelemetryShipConfirm class extending methods of MyTelemetryBase class
+/// </summary>
+final class TelemetryShipConfirm extends MyTelemetryBase
+{
+    private WHSLoadTable load;
+
+}
+]]></Declaration>
+		<Methods>
+			<Method>
+				<Name>new</Name>
+				<Source><![CDATA[
+    void new(WHSLoadTable _load)
+    {
+        super();
+        load = _load;
+        this.eventId = MyApplicationInsightsEventIds::WHSShipConfirm;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>shouldLogEvent</Name>
+				<Source><![CDATA[
+    protected boolean shouldLogEvent()
+    {
+        return true;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>populateProperties</Name>
+				<Source><![CDATA[
+    protected void populateProperties()
+    {
+        WHSLoadLine loadLine;
+        select count(RecId) from loadLine where
+            loadLine.LoadId == load.LoadId;
+
+        // Setting elapsed milliseconds in the concrete implementation so that the implementer can decide what is the right way to get elapsed time.
+        this.setElapsedMilliseconds();
+        this.addBaseProperty(MyApplicationInsightsEventProperties::LoadId, load.LoadId);
+        this.addBaseProperty(MyApplicationInsightsEventProperties::InventLocationId, load.InventLocationId);
+        this.addBaseProperty(MyApplicationInsightsEventProperties::LoadStatus,strFmt("%1",load.LoadStatus));
+        this.addBaseProperty(MyApplicationInsightsEventProperties::NumOfLines, int642Str(loadLine.RecId));
+    }
+
+]]></Source>
+			</Method>
+		</Methods>
+	</SourceCode>
+</AxClass>

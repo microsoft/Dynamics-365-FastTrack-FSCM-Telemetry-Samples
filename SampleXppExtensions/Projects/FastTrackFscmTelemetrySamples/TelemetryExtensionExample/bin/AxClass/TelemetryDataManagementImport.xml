@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxClass xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Name>TelemetryDataManagementImport</Name>
+	<SourceCode>
+		<Declaration><![CDATA[
+/// <summary>
+/// <c>TelemetryDataManagementImport</c> class log monitoring and telemetry custom events/metrics
+/// </summary>
+internal final class TelemetryDataManagementImport extends MyTelemetryBase
+{
+    private DMFDefinitionGroupExecutionHistory  dmfDefinitionGroupExecutionHistory;
+    private TransDateTime                       executionStartTime;
+    private TransDateTime                       executionEndTime;
+}
+]]></Declaration>
+		<Methods>
+			<Method>
+				<Name>new</Name>
+				<Source><![CDATA[
+    void new(TransDateTime _operationStart, TransDateTime _operationEnd,DMFDefinitionGroupExecutionHistory _dmfDefinitionGroupExecutionHistory)
+    {
+        super();
+        dmfDefinitionGroupExecutionHistory = _dmfDefinitionGroupExecutionHistory;
+        executionStartTime = _operationStart;
+        executionEndTime = _operationEnd;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>shouldLogEvent</Name>
+				<Source><![CDATA[
+    protected boolean shouldLogEvent()
+    {
+        return true;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>populateProperties</Name>
+				<Source><![CDATA[
+    /// <summary>
+    /// populate telemetry entries to a map
+    /// </summary>
+    protected void populateProperties()
+    {
+        // We don't have to call the SetElapsedMilliSeconds() because we are getting the execution time from the table entry
+        // this.setElapsedMilliseconds();
+        this.addBaseProperty(MyApplicationInsightsEventProperties::ElapsedMilliseconds, int642Str(DateTimeUtil::getDifference(executionEndTime, executionStartTime)));
+        this.addBaseProperty(MyApplicationInsightsEventProperties::DefinitionGroup, dmfDefinitionGroupExecutionHistory.DefinitionGroup);
+        this.addBaseProperty(MyApplicationInsightsEventProperties::Entity, dmfDefinitionGroupExecutionHistory.Entity);
+        this.addBaseProperty(MyApplicationInsightsEventProperties::ExecutionId,dmfDefinitionGroupExecutionHistory.ExecutionId);
+        this.addBaseProperty(MyApplicationInsightsEventProperties::NoOfRecords, int2Str(dmfDefinitionGroupExecutionHistory.NoOfRecords));
+        this.addBaseProperty(MyApplicationInsightsEventProperties::NumOfTargetNew,int2Str(dmfDefinitionGroupExecutionHistory.NumOfTargetNew));
+        this.addBaseProperty(MyApplicationInsightsEventProperties::NumOfTargetUpdated, int2Str(dmfDefinitionGroupExecutionHistory.NumOfTargetUpdated));
+    }
+
+]]></Source>
+			</Method>
+		</Methods>
+	</SourceCode>
+</AxClass>

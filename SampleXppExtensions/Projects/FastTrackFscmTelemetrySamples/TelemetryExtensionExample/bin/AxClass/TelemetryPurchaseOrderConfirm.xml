@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxClass xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Name>TelemetryPurchaseOrderConfirm</Name>
+	<SourceCode>
+		<Declaration><![CDATA[
+/// <summary>
+/// TelemetryPurchaseOrderConfirm class extending methods of MyTelemetryBase class
+/// </summary>
+final class TelemetryPurchaseOrderConfirm extends MyTelemetryBase
+{
+    private PurchTable purchTable;
+
+}
+]]></Declaration>
+		<Methods>
+			<Method>
+				<Name>new</Name>
+				<Source><![CDATA[
+    void new(PurchTable _purchTable)
+    {
+        super();
+        purchTable = _purchTable;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>shouldLogEvent</Name>
+				<Source><![CDATA[
+    protected boolean shouldLogEvent()
+    {
+        return true;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>populateProperties</Name>
+				<Source><![CDATA[
+    protected void populateProperties()
+    {
+        // Setting elapsed milliseconds in the concrete implementation so that the implementer can decide what is the right way to get elapsed time.
+        this.setElapsedMilliseconds();
+        this.addBaseProperty(MyApplicationInsightsEventProperties::PurchId, purchTable.PurchId);
+        this.addBaseProperty(MyApplicationInsightsEventProperties::PurchStatus, strFmt("%1", purchTable.PurchStatus));
+        this.addBaseProperty(MyApplicationInsightsEventProperties::DeliveryDate, DateTimeUtil::toStr(purchTable.DeliveryDate));
+    }
+
+]]></Source>
+			</Method>
+		</Methods>
+	</SourceCode>
+</AxClass>

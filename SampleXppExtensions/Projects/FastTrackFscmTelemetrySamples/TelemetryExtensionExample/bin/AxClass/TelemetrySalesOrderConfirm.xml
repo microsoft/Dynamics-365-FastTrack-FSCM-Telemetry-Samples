@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxClass xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Name>TelemetrySalesOrderConfirm</Name>
+	<SourceCode>
+		<Declaration><![CDATA[
+/// <summary>
+/// TelemetrySalesOrderConfirm class extending methods of MyTelemetryBase class
+/// </summary>
+final class TelemetrySalesOrderConfirm extends MyTelemetryBase
+{
+    private SalesTable salesTable;
+    private str error;
+}
+]]></Declaration>
+		<Methods>
+			<Method>
+				<Name>new</Name>
+				<Source><![CDATA[
+    void new( SalesTable _salesTable,  str _error)
+    {
+        super();
+        salesTable = _salesTable;
+        this.addBaseProperty(MyApplicationInsightsEventProperties::SalesId, salesTable.SalesId);
+        this.addBaseProperty(MyApplicationInsightsEventProperties::CustAccount, salesTable.CustAccount);
+        this.addBaseProperty(MyApplicationInsightsEventProperties::SalesStatus, strFmt("%1", salesTable.SalesStatus));
+        this.addBaseProperty(MyApplicationInsightsEventProperties::DeliveryDate, DateTimeUtil::toStr(salesTable.DeliveryDate));
+
+        this.error = _error;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>shouldLogEvent</Name>
+				<Source><![CDATA[
+    protected boolean shouldLogEvent()
+    {
+        if(!this.error && telemetryLoggingParams.SeverityLevel > MyTelemetrySeverityLevel::Information)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>populateProperties</Name>
+				<Source><![CDATA[
+    protected void populateProperties()
+    {
+        // Setting elapsed milliseconds in the concrete implementation so that the implementer can decide what is the right way to get elapsed time.
+        this.setElapsedMilliseconds();
+    }
+
+]]></Source>
+			</Method>
+		</Methods>
+	</SourceCode>
+</AxClass>
