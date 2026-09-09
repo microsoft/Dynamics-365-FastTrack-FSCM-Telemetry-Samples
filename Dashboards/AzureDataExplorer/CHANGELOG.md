@@ -50,11 +50,11 @@ Entries are grouped by dashboard and listed newest first.
   picker offered values that could never match the batch tiles. It now reads batch
   `customEvents`, drops empty values, and sorts ascending.
 
-- **Batch Job Id value list raised a semantic error.** Its lookup query referenced
-  `_startTime` and `_endTime`. Those variables are declared by the Time range parameter
-  but are only available to tile queries — parameter lookup queries cannot resolve them,
-  so the query failed to compile. The lookup now uses a fixed `ago(7d) .. now()` window,
-  matching the workaround already used by the Environment Id lookup.
+- **Environment Id value list ignored the dashboard time range.** The lookup was
+  hardcoded to `ago(7d) .. now()`. With a time range wider than seven days, environments
+  present only in the older window were missing from the picker even though the tiles
+  would have filtered on them correctly. It now uses `_startTime .. _endTime`, so all
+  queries in the dashboard share the dashboard time range.
 
 #### Changed
 
@@ -73,10 +73,9 @@ Entries are grouped by dashboard and listed newest first.
 #### Result
 
 All three parameters — Activity Id, Batch Job Id and Environment Id — are now
-consistent: `array` selection with `includeAllOption`, and membership (`in (...)`)
-filters guarded by `isempty()`.
+consistent: `array` selection with `includeAllOption`, membership (`in (...)`) filters
+guarded by `isempty()`, and lookup queries bound to the dashboard time range.
 
-> **Note:** parameter lookup queries cannot reference the Time range parameter's
-> `_startTime` / `_endTime` variables — those resolve only in tile queries. All three
-> lookups therefore use a fixed `ago(7d) .. now()` window to populate their value lists,
-> independently of the time range selected on the dashboard.
+> **Note:** the Azure Data Explorer query editor may report a semantic error on
+> `_startTime` / `_endTime` in a parameter lookup query until that query has been run
+> once from within the parameter editor. The variables do resolve correctly at runtime.
