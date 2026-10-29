@@ -1,0 +1,865 @@
+{
+  "$schema": "https://dataexplorer.azure.com/static/d/schema/72/dashboard.json",
+  "id": "5b0d4824-abfe-4bab-8b4e-0b8de689af5a",
+  "title": "D365FO-Monitoring-Summary (Env filter)",
+  "schema_version": 72,
+  "tiles": [
+    {
+      "id": "5141e29e-55b2-406d-9c07-12df0942cd15",
+      "title": "Form opens",
+      "description": "Total pageViews (form opens) in the time range. Same population as Forms > 'Form execution spread'. [Forms]",
+      "visualType": "card",
+      "pageId": "2c7f2337-9e83-498d-89d7-9453d5f8853d",
+      "layout": {
+        "x": 0,
+        "y": 0,
+        "width": 6,
+        "height": 3
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "25c563e1-66fd-4867-8524-72e9a788523a"
+      },
+      "visualOptions": {
+        "multiStat__textSize": "auto",
+        "multiStat__valueColumn": null,
+        "colorRulesDisabled": true,
+        "colorStyle": "light",
+        "colorRules": [],
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": false,
+        "crossFilter": [],
+        "drillthrough": []
+      }
+    },
+    {
+      "id": "3020bbe4-4f5b-498d-a45b-d228fda26a25",
+      "title": "Distinct forms",
+      "description": "Number of different forms opened (dcount of pageViews.name). [Forms]",
+      "visualType": "card",
+      "pageId": "2c7f2337-9e83-498d-89d7-9453d5f8853d",
+      "layout": {
+        "x": 6,
+        "y": 0,
+        "width": 6,
+        "height": 3
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "cdac2213-51be-4841-aafa-1377636bab9a"
+      },
+      "visualOptions": {
+        "multiStat__textSize": "auto",
+        "multiStat__valueColumn": null,
+        "colorRulesDisabled": true,
+        "colorStyle": "light",
+        "colorRules": [],
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": false,
+        "crossFilter": [],
+        "drillthrough": []
+      }
+    },
+    {
+      "id": "a46a25e3-207d-4d26-ad9d-031c2bc27497",
+      "title": "Median form duration (s)",
+      "description": "Average form load duration in seconds, pageViews with duration > 0 (same logic as Forms > 'Form usage by longest average duration'). [Forms]",
+      "visualType": "card",
+      "pageId": "2c7f2337-9e83-498d-89d7-9453d5f8853d",
+      "layout": {
+        "x": 12,
+        "y": 0,
+        "width": 6,
+        "height": 3
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "6b889887-7dbc-4a2e-9e4f-97f7bfdc50ea"
+      },
+      "visualOptions": {
+        "multiStat__textSize": "auto",
+        "multiStat__valueColumn": null,
+        "colorRulesDisabled": true,
+        "colorStyle": "light",
+        "colorRules": [],
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": false,
+        "crossFilter": [],
+        "drillthrough": []
+      }
+    },
+    {
+      "id": "38e23487-0678-4108-869b-2cf224280799",
+      "title": "Batch tasks executed",
+      "description": "Count of BatchTaskStart events (same as the total of Batch > 'Batch server #tasks execution spread' / RunningTasks). [Batch]",
+      "visualType": "card",
+      "pageId": "2c7f2337-9e83-498d-89d7-9453d5f8853d",
+      "layout": {
+        "x": 18,
+        "y": 0,
+        "width": 6,
+        "height": 3
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "a5bb25fa-ce4c-41a3-a963-19f685ceb15d"
+      },
+      "visualOptions": {
+        "multiStat__textSize": "auto",
+        "multiStat__valueColumn": null,
+        "colorRulesDisabled": true,
+        "colorStyle": "light",
+        "colorRules": [],
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": false,
+        "crossFilter": [],
+        "drillthrough": []
+      }
+    },
+    {
+      "id": "84a72bd6-7e8c-4f37-82e1-4d20670cd87a",
+      "title": "Failed batch tasks",
+      "description": "Count of BatchTaskFailure events: exceptions thrown during batch scheduling/execution (Batch > Batch Errors > 'Batch exceptions'). [Batch]",
+      "visualType": "card",
+      "pageId": "2c7f2337-9e83-498d-89d7-9453d5f8853d",
+      "layout": {
+        "x": 0,
+        "y": 3,
+        "width": 5,
+        "height": 3
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "5ee36ab4-bb86-4e80-bed2-1b352750adc6"
+      },
+      "visualOptions": {
+        "multiStat__textSize": "auto",
+        "multiStat__valueColumn": null,
+        "colorRulesDisabled": true,
+        "colorStyle": "light",
+        "colorRules": [],
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": false,
+        "crossFilter": [],
+        "drillthrough": []
+      }
+    },
+    {
+      "id": "ee5dc1a5-7fa5-42c9-a27a-275328c0a523",
+      "title": "Batch Infolog errors",
+      "description": "Infolog errors raised in batch (exceptions where ExecutionMode == 'Batch'), same as Batch > Batch Errors > 'Batch Infolog Errors'. All exceptions (any mode) are in 'Errors over time by execution mode'. [Batch / Errors]",
+      "visualType": "card",
+      "pageId": "2c7f2337-9e83-498d-89d7-9453d5f8853d",
+      "layout": {
+        "x": 5,
+        "y": 3,
+        "width": 5,
+        "height": 3
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "c3df4827-091f-4068-877e-184664d84164"
+      },
+      "visualOptions": {
+        "multiStat__textSize": "auto",
+        "multiStat__valueColumn": null,
+        "colorRulesDisabled": true,
+        "colorStyle": "light",
+        "colorRules": [],
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": false,
+        "crossFilter": [],
+        "drillthrough": []
+      }
+    },
+    {
+      "id": "c32fda14-95d1-4d18-bf67-87ba50d741a0",
+      "title": "DMF executions",
+      "description": "Completed DMF import/export executions (distinct ExecutionId on DMFExportJobEnd/DMFImportJobEnd), same as DMF > 'Import vs export count (completed)' summed. [DMF]",
+      "visualType": "card",
+      "pageId": "2c7f2337-9e83-498d-89d7-9453d5f8853d",
+      "layout": {
+        "x": 10,
+        "y": 3,
+        "width": 5,
+        "height": 3
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "700ed8d4-fe5a-4d57-8008-7850ed5c9cc7"
+      },
+      "visualOptions": {
+        "multiStat__textSize": "auto",
+        "multiStat__valueColumn": null,
+        "colorRulesDisabled": true,
+        "colorStyle": "light",
+        "colorRules": [],
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": false,
+        "crossFilter": [],
+        "drillthrough": []
+      }
+    },
+    {
+      "id": "05688283-cb67-4817-b75b-5a1cff22c5c0",
+      "title": "DMF errors",
+      "description": "Count of DMFError events (DMF > Errors page). [DMF]",
+      "visualType": "card",
+      "pageId": "2c7f2337-9e83-498d-89d7-9453d5f8853d",
+      "layout": {
+        "x": 15,
+        "y": 3,
+        "width": 5,
+        "height": 3
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "3b1233d1-4689-472a-ac4a-512d2821977e"
+      },
+      "visualOptions": {
+        "multiStat__textSize": "auto",
+        "multiStat__valueColumn": null,
+        "colorRulesDisabled": true,
+        "colorStyle": "light",
+        "colorRules": [],
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": false,
+        "crossFilter": [],
+        "drillthrough": []
+      }
+    },
+    {
+      "id": "8aae381c-787b-4e93-89be-cad96fb80921",
+      "title": "Slow queries (flight off)",
+      "description": "Count of LongRunningQuery events. Shows 0 until Microsoft re-enables the LongRunningQuery flight (disabled by Microsoft; LCS support issue 968862). [Slow Queries]",
+      "visualType": "card",
+      "pageId": "2c7f2337-9e83-498d-89d7-9453d5f8853d",
+      "layout": {
+        "x": 20,
+        "y": 3,
+        "width": 4,
+        "height": 3
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "1afe5ac2-47ba-4ce0-93f6-0758c8fd9259"
+      },
+      "visualOptions": {
+        "multiStat__textSize": "auto",
+        "multiStat__valueColumn": null,
+        "colorRulesDisabled": true,
+        "colorStyle": "light",
+        "colorRules": [],
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": false,
+        "crossFilter": [],
+        "drillthrough": []
+      }
+    },
+    {
+      "id": "d97156d8-782a-4932-b254-7d6c33da1314",
+      "title": "Form opens over time",
+      "description": "Form opens per hour (Forms > 'Form execution spread'). [Forms]",
+      "visualType": "timechart",
+      "pageId": "2c7f2337-9e83-498d-89d7-9453d5f8853d",
+      "layout": {
+        "x": 0,
+        "y": 6,
+        "width": 8,
+        "height": 8
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "163b477b-c796-4292-89eb-71fe15bc50b9"
+      },
+      "visualOptions": {
+        "multipleYAxes": {
+          "base": {
+            "id": "-1",
+            "label": "",
+            "columns": [],
+            "yAxisMaximumValue": null,
+            "yAxisMinimumValue": null,
+            "yAxisScale": "linear",
+            "horizontalLines": []
+          },
+          "additional": [],
+          "showMultiplePanels": false
+        },
+        "hideLegend": false,
+        "legendLocation": "bottom",
+        "xColumnTitle": "",
+        "xColumn": null,
+        "yColumns": null,
+        "seriesColumns": null,
+        "xAxisScale": "linear",
+        "verticalLine": "",
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": false,
+        "crossFilter": [],
+        "seriesColors": {},
+        "forceAxisTicks": false,
+        "drillthrough": [],
+        "selectedDataOnLoad": {
+          "all": true,
+          "limit": 10
+        },
+        "dataPointsTooltip": {
+          "all": false,
+          "limit": 1
+        }
+      }
+    },
+    {
+      "id": "aabab9f4-4600-4d24-8347-02442830c406",
+      "title": "Batch running vs throttled tasks",
+      "description": "Running tasks (BatchTaskStart) vs throttled tasks (BatchThrottled) per 10 minutes (Batch > 'Throttled batch tasks'). [Batch]",
+      "visualType": "area",
+      "pageId": "2c7f2337-9e83-498d-89d7-9453d5f8853d",
+      "layout": {
+        "x": 8,
+        "y": 6,
+        "width": 8,
+        "height": 8
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "34659d75-5f94-4a99-b788-c72a92088f9c"
+      },
+      "visualOptions": {
+        "multipleYAxes": {
+          "base": {
+            "id": "-1",
+            "label": "",
+            "columns": [],
+            "yAxisMaximumValue": null,
+            "yAxisMinimumValue": null,
+            "yAxisScale": "linear",
+            "horizontalLines": []
+          },
+          "additional": [],
+          "showMultiplePanels": false
+        },
+        "hideLegend": false,
+        "legendLocation": "bottom",
+        "xColumnTitle": "",
+        "xColumn": null,
+        "yColumns": null,
+        "seriesColumns": null,
+        "xAxisScale": "linear",
+        "verticalLine": "",
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": false,
+        "crossFilter": [],
+        "seriesColors": {},
+        "forceAxisTicks": false,
+        "drillthrough": [],
+        "selectedDataOnLoad": {
+          "all": true,
+          "limit": 10
+        },
+        "dataPointsTooltip": {
+          "all": false,
+          "limit": 1
+        }
+      }
+    },
+    {
+      "id": "d12541c7-25fb-4ae3-b046-af5c87a65d7a",
+      "title": "Errors over time by execution mode",
+      "description": "All exceptions (Infolog errors) per hour split by ExecutionMode (Errors > 'Sum of errors per Execution Mode' / 'by Time Span'). [Errors]",
+      "visualType": "timechart",
+      "pageId": "2c7f2337-9e83-498d-89d7-9453d5f8853d",
+      "layout": {
+        "x": 16,
+        "y": 6,
+        "width": 8,
+        "height": 8
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "46f7f0ad-9f54-4531-8e9f-77d3e757608f"
+      },
+      "visualOptions": {
+        "multipleYAxes": {
+          "base": {
+            "id": "-1",
+            "label": "",
+            "columns": [],
+            "yAxisMaximumValue": null,
+            "yAxisMinimumValue": null,
+            "yAxisScale": "linear",
+            "horizontalLines": []
+          },
+          "additional": [],
+          "showMultiplePanels": false
+        },
+        "hideLegend": false,
+        "legendLocation": "bottom",
+        "xColumnTitle": "",
+        "xColumn": null,
+        "yColumns": null,
+        "seriesColumns": null,
+        "xAxisScale": "linear",
+        "verticalLine": "",
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": false,
+        "crossFilter": [],
+        "seriesColors": {},
+        "forceAxisTicks": false,
+        "drillthrough": [],
+        "selectedDataOnLoad": {
+          "all": true,
+          "limit": 10
+        },
+        "dataPointsTooltip": {
+          "all": false,
+          "limit": 1
+        }
+      }
+    },
+    {
+      "id": "954e22de-0038-4400-bae8-9a807860ba1b",
+      "title": "Top 10 slowest forms (avg duration)",
+      "description": "Top 10 forms by average duration (Forms > 'Form usage by longest average duration'). [Forms]",
+      "visualType": "table",
+      "pageId": "2c7f2337-9e83-498d-89d7-9453d5f8853d",
+      "layout": {
+        "x": 0,
+        "y": 14,
+        "width": 8,
+        "height": 8
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "d6949f82-e793-43b4-9fc9-e472103058b3"
+      },
+      "visualOptions": {
+        "table__enableRenderLinks": true,
+        "colorRulesDisabled": true,
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": false,
+        "crossFilter": [],
+        "drillthrough": [],
+        "table__renderLinks": [],
+        "colorRules": []
+      }
+    },
+    {
+      "id": "0d45b681-f87a-4757-97c5-064e97000e4a",
+      "title": "Top 10 batch errors (Infolog + task failures)",
+      "description": "Most frequent batch error messages by job caption: Infolog errors (exceptions, ExecutionMode == 'Batch', outerMessage) plus BatchTaskFailure exceptions (ExceptionMessage). Message truncated to 300 chars. [Batch]",
+      "visualType": "table",
+      "pageId": "2c7f2337-9e83-498d-89d7-9453d5f8853d",
+      "layout": {
+        "x": 8,
+        "y": 14,
+        "width": 8,
+        "height": 8
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "8a013801-ba51-4147-bba4-f4563b353e57"
+      },
+      "visualOptions": {
+        "table__enableRenderLinks": true,
+        "colorRulesDisabled": true,
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": false,
+        "crossFilter": [],
+        "drillthrough": [],
+        "table__renderLinks": [],
+        "colorRules": []
+      }
+    },
+    {
+      "id": "5040e654-c062-414c-bf29-eafe85268714",
+      "title": "Top 10 DMF executions by duration",
+      "description": "Longest DMF executions per entity/ExecutionId (DMF > 'Executions by duration (top 100)', limited to 10). [DMF]",
+      "visualType": "table",
+      "pageId": "2c7f2337-9e83-498d-89d7-9453d5f8853d",
+      "layout": {
+        "x": 16,
+        "y": 14,
+        "width": 8,
+        "height": 8
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "8ce13347-6883-4e42-8f56-92ae7164283f"
+      },
+      "visualOptions": {
+        "table__enableRenderLinks": true,
+        "colorRulesDisabled": true,
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": false,
+        "crossFilter": [],
+        "drillthrough": [],
+        "table__renderLinks": [],
+        "colorRules": []
+      }
+    },
+    {
+      "id": "a6b9b3e1-b661-4dec-8f37-78265d3b5881",
+      "title": "Activity by environment",
+      "description": "Side-by-side counts per F&O environment (customDimensions.environmentId) for the selected time range. Same definitions as the KPI cards. [Forms + Batch + DMF + Errors + Slow Queries]",
+      "visualType": "table",
+      "pageId": "2c7f2337-9e83-498d-89d7-9453d5f8853d",
+      "layout": {
+        "x": 0,
+        "y": 22,
+        "width": 16,
+        "height": 8
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "04e1b49e-141f-4a5e-b2e3-438ac734fb86"
+      },
+      "visualOptions": {
+        "table__enableRenderLinks": true,
+        "colorRulesDisabled": true,
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": false,
+        "crossFilter": [],
+        "drillthrough": [],
+        "table__renderLinks": [],
+        "colorRules": []
+      }
+    },
+    {
+      "id": "b19f8fed-7e5e-4ec9-937b-02d28c6ba02b",
+      "title": "Form execution by Legal Entity",
+      "description": "Form opens split by legal entity (Forms > 'Form execution by Legal Entity'). [Forms]",
+      "visualType": "pie",
+      "pageId": "2c7f2337-9e83-498d-89d7-9453d5f8853d",
+      "layout": {
+        "x": 16,
+        "y": 22,
+        "width": 8,
+        "height": 8
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "de96e459-312d-445b-92bc-e470d9c0c20e"
+      },
+      "visualOptions": {
+        "hideLegend": false,
+        "legendLocation": "bottom",
+        "xColumn": null,
+        "yColumns": null,
+        "seriesColumns": null,
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": false,
+        "labelDisabled": false,
+        "pie__label": [
+          "name",
+          "percentage"
+        ],
+        "tooltipDisabled": false,
+        "pie__tooltip": [
+          "name",
+          "percentage",
+          "value"
+        ],
+        "pie__orderBy": "size",
+        "pie__kind": "donut",
+        "pie__topNSlices": null,
+        "crossFilter": [],
+        "seriesColors": {},
+        "drillthrough": []
+      }
+    }
+  ],
+  "baseQueries": [],
+  "parameters": [
+    {
+      "kind": "duration",
+      "id": "bd20d250-7bf5-40f9-9adb-1a775bf70d8b",
+      "displayName": "Time range",
+      "description": "",
+      "beginVariableName": "_startTime",
+      "endVariableName": "_endTime",
+      "defaultValue": {
+        "kind": "dynamic",
+        "count": 24,
+        "unit": "hours"
+      },
+      "showOnPages": {
+        "kind": "all"
+      }
+    },
+    {
+      "kind": "string",
+      "id": "4058ccc9-ef96-4db1-b983-e7e6b3b36b14",
+      "displayName": "Environment Id",
+      "description": "F&O environment (customDimensions.environmentId), seen in the last 7 days",
+      "variableName": "_environmentId",
+      "selectionType": "array",
+      "includeAllOption": true,
+      "defaultValue": {
+        "kind": "all"
+      },
+      "dataSource": {
+        "kind": "query",
+        "columns": {
+          "value": "EnvironmentId"
+        },
+        "queryRef": {
+          "kind": "query",
+          "queryId": "8da33e9c-90fe-433a-a257-6cd37635f8d2"
+        }
+      },
+      "showOnPages": {
+        "kind": "all"
+      }
+    }
+  ],
+  "dataSources": [
+    {
+      "id": "6f2edf23-11b6-48a1-ad15-81660c55ff77",
+      "kind": "manual-kusto",
+      "name": "D365FSCM-Dev",
+      "clusterUri": "https://ade.applicationinsights.io/subscriptions/79def5f1-f626-479f-8db5-b1272680adc1/resourceGroups/D365-ObservabilityMonitoringAgents",
+      "database": "D365-ObservabilityAgents-DEV",
+      "queryResultsCacheMaxAge": 10000
+    }
+  ],
+  "pages": [
+    {
+      "name": "Summary",
+      "id": "2c7f2337-9e83-498d-89d7-9453d5f8853d"
+    }
+  ],
+  "queries": [
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "6f2edf23-11b6-48a1-ad15-81660c55ff77"
+      },
+      "text": "pageViews\n| where timestamp between (_startTime .. _endTime)\n| where isempty(_environmentId) or tostring(customDimensions.environmentId) in (_environmentId)\n| summarize ['Form opens'] = count()",
+      "id": "25c563e1-66fd-4867-8524-72e9a788523a",
+      "usedVariables": [
+        "_endTime",
+        "_environmentId",
+        "_startTime"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "6f2edf23-11b6-48a1-ad15-81660c55ff77"
+      },
+      "text": "pageViews\n| where timestamp between (_startTime .. _endTime)\n| where isempty(_environmentId) or tostring(customDimensions.environmentId) in (_environmentId)\n| summarize ['Distinct forms'] = dcount(name)",
+      "id": "cdac2213-51be-4841-aafa-1377636bab9a",
+      "usedVariables": [
+        "_endTime",
+        "_environmentId",
+        "_startTime"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "6f2edf23-11b6-48a1-ad15-81660c55ff77"
+      },
+      "text": "pageViews\n| where timestamp between (_startTime .. _endTime)\n| where isempty(_environmentId) or tostring(customDimensions.environmentId) in (_environmentId)\n| where duration > 0\n| summarize ['Median duration (s)'] = round(percentile(duration,50)/1000,2)",
+      "id": "6b889887-7dbc-4a2e-9e4f-97f7bfdc50ea",
+      "usedVariables": [
+        "_endTime",
+        "_environmentId",
+        "_startTime"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "6f2edf23-11b6-48a1-ad15-81660c55ff77"
+      },
+      "text": "customEvents\n| where timestamp between (_startTime .. _endTime)\n| where name == \"BatchTaskStart\"\n| where isempty(_environmentId) or tostring(customDimensions.environmentId) in (_environmentId)\n| summarize ['Batch tasks'] = count()",
+      "id": "a5bb25fa-ce4c-41a3-a963-19f685ceb15d",
+      "usedVariables": [
+        "_endTime",
+        "_environmentId",
+        "_startTime"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "6f2edf23-11b6-48a1-ad15-81660c55ff77"
+      },
+      "text": "customEvents\n| where timestamp between (_startTime .. _endTime)\n| where name == \"BatchTaskFailure\"\n| where isempty(_environmentId) or tostring(customDimensions.environmentId) in (_environmentId)\n| summarize ['Failed batch tasks'] = count()",
+      "id": "5ee36ab4-bb86-4e80-bed2-1b352750adc6",
+      "usedVariables": [
+        "_endTime",
+        "_environmentId",
+        "_startTime"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "6f2edf23-11b6-48a1-ad15-81660c55ff77"
+      },
+      "text": "exceptions\n| where timestamp between (_startTime .. _endTime)\n| where isempty(_environmentId) or tostring(customDimensions.environmentId) in (_environmentId)\n| extend ExecutionMode = tostring(parse_json(customDimensions).ExecutionMode)\n| where ExecutionMode == \"Batch\"\n| summarize ['Batch Infolog errors'] = count()",
+      "id": "c3df4827-091f-4068-877e-184664d84164",
+      "usedVariables": [
+        "_endTime",
+        "_environmentId",
+        "_startTime"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "6f2edf23-11b6-48a1-ad15-81660c55ff77"
+      },
+      "text": "customEvents\n| where timestamp between (_startTime .. _endTime)\n| where name == \"DMFExportJobEnd\" or name == \"DMFImportJobEnd\"\n| where isempty(_environmentId) or tostring(customDimensions.environmentId) in (_environmentId)\n| extend ExecutionId = tostring(parse_json(customDimensions).ExecutionId)\n| summarize ['DMF executions'] = count_distinct(ExecutionId)",
+      "id": "700ed8d4-fe5a-4d57-8008-7850ed5c9cc7",
+      "usedVariables": [
+        "_endTime",
+        "_environmentId",
+        "_startTime"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "6f2edf23-11b6-48a1-ad15-81660c55ff77"
+      },
+      "text": "customEvents\n| where timestamp between (_startTime .. _endTime)\n| where name == \"DMFError\"\n| where isempty(_environmentId) or tostring(customDimensions.environmentId) in (_environmentId)\n| summarize ['DMF errors'] = count()",
+      "id": "3b1233d1-4689-472a-ac4a-512d2821977e",
+      "usedVariables": [
+        "_endTime",
+        "_environmentId",
+        "_startTime"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "6f2edf23-11b6-48a1-ad15-81660c55ff77"
+      },
+      "text": "customEvents\n| where timestamp between (_startTime .. _endTime)\n| where name == \"LongRunningQuery\"\n| where isempty(_environmentId) or tostring(customDimensions.environmentId) in (_environmentId)\n| summarize ['Slow queries'] = count()",
+      "id": "1afe5ac2-47ba-4ce0-93f6-0758c8fd9259",
+      "usedVariables": [
+        "_endTime",
+        "_environmentId",
+        "_startTime"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "6f2edf23-11b6-48a1-ad15-81660c55ff77"
+      },
+      "text": "pageViews\n| where timestamp between (_startTime .. _endTime)\n| where isempty(_environmentId) or tostring(customDimensions.environmentId) in (_environmentId)\n| summarize ['Form opens'] = count() by bin(timestamp, 1h)\n| order by timestamp asc",
+      "id": "163b477b-c796-4292-89eb-71fe15bc50b9",
+      "usedVariables": [
+        "_endTime",
+        "_environmentId",
+        "_startTime"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "6f2edf23-11b6-48a1-ad15-81660c55ff77"
+      },
+      "text": "let _scale = '10m';\ncustomEvents\n| where timestamp between (_startTime .. _endTime)\n| where name in (\"BatchThrottled\", \"BatchTaskStart\")\n| where isempty(_environmentId) or tostring(customDimensions.environmentId) in (_environmentId)\n| summarize ThrottledTasks = countif(name == \"BatchThrottled\"), RunningTasks = countif(name == \"BatchTaskStart\") by TimeSum = bin(timestamp, totimespan(_scale))\n| project TimeSum, RunningTasks, ThrottledTasks\n| order by TimeSum asc",
+      "id": "34659d75-5f94-4a99-b788-c72a92088f9c",
+      "usedVariables": [
+        "_endTime",
+        "_environmentId",
+        "_startTime"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "6f2edf23-11b6-48a1-ad15-81660c55ff77"
+      },
+      "text": "exceptions\n| where timestamp between (_startTime .. _endTime)\n| where isempty(_environmentId) or tostring(customDimensions.environmentId) in (_environmentId)\n| extend ExecutionMode = tostring(customDimensions.ExecutionMode)\n| extend ExecutionMode = iff(isempty(ExecutionMode), \"(not set)\", ExecutionMode)\n| summarize Errors = count() by bin(timestamp, 1h), ExecutionMode\n| order by timestamp asc",
+      "id": "46f7f0ad-9f54-4531-8e9f-77d3e757608f",
+      "usedVariables": [
+        "_endTime",
+        "_environmentId",
+        "_startTime"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "6f2edf23-11b6-48a1-ad15-81660c55ff77"
+      },
+      "text": "pageViews\n| where timestamp between (_startTime .. _endTime)\n| where isempty(_environmentId) or tostring(customDimensions.environmentId) in (_environmentId)\n| where duration > 0\n| project ['Form name'] = name, duration\n| summarize     ['Avg duration (s)']    = round(avg(duration)/1000,2)\n            ,   ['Executions']          = count()\n            ,   ['Max duration (s)']    = round(max(duration)/1000,2)\n            ,   ['Percentile 95 (s)']   = round(percentile(duration,95)/1000,2) by ['Form name']\n| top 10 by ['Avg duration (s)'] desc",
+      "id": "d6949f82-e793-43b4-9fc9-e472103058b3",
+      "usedVariables": [
+        "_endTime",
+        "_environmentId",
+        "_startTime"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "6f2edf23-11b6-48a1-ad15-81660c55ff77"
+      },
+      "text": "let infologErrors = exceptions\n    | where timestamp between (_startTime .. _endTime)\n    | where isempty(_environmentId) or tostring(customDimensions.environmentId) in (_environmentId)\n    | extend cd = parse_json(customDimensions)\n    | extend ExecutionMode = tostring(cd.ExecutionMode)\n    | where ExecutionMode == \"Batch\"\n    | project timestamp, Source = \"Infolog error\", BatchJobId = tostring(cd.BatchJobId), BatchJobCaption = tostring(cd.BatchJobCaption), Message = outerMessage;\nlet taskFailures = customEvents\n    | where timestamp between (_startTime .. _endTime)\n    | where name == \"BatchTaskFailure\"\n    | where isempty(_environmentId) or tostring(customDimensions.environmentId) in (_environmentId)\n    | extend cd = parse_json(customDimensions)\n    | extend ExceptionMessage = tostring(cd.ExceptionMessage), EventMessage = tostring(cd.EventMessage)\n    | project timestamp, Source = \"BatchTaskFailure\", BatchJobId = tostring(cd.BatchJobId), BatchJobCaption = tostring(cd.BatchJobCaption), Message = iff(isnotempty(ExceptionMessage), ExceptionMessage, EventMessage);\nunion infologErrors, taskFailures\n| extend Message = substring(Message, 0, 300)\n| summarize Occurrences = count(), ['Distinct job ids'] = dcount(BatchJobId), ['Last seen'] = max(timestamp) by ['Batch job caption'] = BatchJobCaption, Message, Source\n| top 10 by Occurrences desc",
+      "id": "8a013801-ba51-4147-bba4-f4563b353e57",
+      "usedVariables": [
+        "_endTime",
+        "_environmentId",
+        "_startTime"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "6f2edf23-11b6-48a1-ad15-81660c55ff77"
+      },
+      "text": "customEvents\n| where timestamp between (_startTime .. _endTime)\n| where name in (\"DMFImportJobStart\",\"DMFImportJobEnd\",\"DMFExportJobStart\", \"DMFExportJobEnd\")\n| where isempty(_environmentId) or tostring(customDimensions.environmentId) in (_environmentId)\n| extend cd = parse_json(customDimensions)\n| extend EntityName = tostring(cd.EntityName)\n| extend ExecutionId = tostring(cd.ExecutionId)\n| extend LegalEntity = tostring(cd.LegalEntity)\n| extend TotalNumberOfRecords = tolong(cd.TotalNumberOfRecords)\n| extend direction = iff(name startswith \"DMFExport\", \"Export\",\n                     iff(name startswith \"DMFImpot\", \"Import\",\n                     iff(ExecutionId has \"Import\" or ExecutionId has \"import\", \"Import\", \"Export\")))\n| summarize Duration = max(timestamp)-min(timestamp), Start = min(timestamp), End = max(timestamp), LegalEntity = take_any(LegalEntity), Records = max(TotalNumberOfRecords), Direction = take_any(direction) by EntityName, ExecutionId\n| top 10 by Duration desc",
+      "id": "8ce13347-6883-4e42-8f56-92ae7164283f",
+      "usedVariables": [
+        "_endTime",
+        "_environmentId",
+        "_startTime"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "6f2edf23-11b6-48a1-ad15-81660c55ff77"
+      },
+      "text": "let forms = pageViews\n    | where timestamp between (_startTime .. _endTime)\n    | where isempty(_environmentId) or tostring(customDimensions.environmentId) in (_environmentId)\n    | summarize FormOpens = count(), LastSeen = max(timestamp) by EnvironmentId = tostring(customDimensions.environmentId);\nlet events = customEvents\n    | where timestamp between (_startTime .. _endTime)\n    | where name in (\"BatchTaskStart\", \"BatchTaskFailure\", \"DMFError\", \"LongRunningQuery\")\n    | where isempty(_environmentId) or tostring(customDimensions.environmentId) in (_environmentId)\n    | summarize BatchTasks = countif(name == \"BatchTaskStart\"), FailedBatchTasks = countif(name == \"BatchTaskFailure\"), DMFErrors = countif(name == \"DMFError\"), SlowQueries = countif(name == \"LongRunningQuery\"), LastSeen = max(timestamp) by EnvironmentId = tostring(customDimensions.environmentId);\nlet dmf = customEvents\n    | where timestamp between (_startTime .. _endTime)\n    | where name == \"DMFExportJobEnd\" or name == \"DMFImportJobEnd\"\n    | where isempty(_environmentId) or tostring(customDimensions.environmentId) in (_environmentId)\n    | summarize DMFExecutions = count_distinct(tostring(customDimensions.ExecutionId)), LastSeen = max(timestamp) by EnvironmentId = tostring(customDimensions.environmentId);\nlet errs = exceptions\n    | where timestamp between (_startTime .. _endTime)\n    | where isempty(_environmentId) or tostring(customDimensions.environmentId) in (_environmentId)\n    | summarize Exceptions = count(), BatchInfologErrors = countif(tostring(customDimensions.ExecutionMode) == \"Batch\"), LastSeen = max(timestamp) by EnvironmentId = tostring(customDimensions.environmentId);\nunion forms, events, dmf, errs\n| where isnotempty(EnvironmentId)\n| summarize ['Form opens']           = sum(coalesce(FormOpens, 0))\n          , ['Batch tasks']          = sum(coalesce(BatchTasks, 0))\n          , ['Failed batch tasks']   = sum(coalesce(FailedBatchTasks, 0))\n          , ['Batch Infolog errors'] = sum(coalesce(BatchInfologErrors, 0))\n          , ['DMF executions']       = sum(coalesce(DMFExecutions, 0))\n          , ['DMF errors']           = sum(coalesce(DMFErrors, 0))\n          , ['Exceptions (all)']     = sum(coalesce(Exceptions, 0))\n          , ['Slow queries']         = sum(coalesce(SlowQueries, 0))\n          , ['Last telemetry']       = max(LastSeen) by ['Environment Id'] = EnvironmentId\n| order by ['Environment Id'] asc",
+      "id": "04e1b49e-141f-4a5e-b2e3-438ac734fb86",
+      "usedVariables": [
+        "_endTime",
+        "_environmentId",
+        "_startTime"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "6f2edf23-11b6-48a1-ad15-81660c55ff77"
+      },
+      "text": "pageViews\n| where timestamp between (_startTime .. _endTime)\n| where isempty(_environmentId) or tostring(customDimensions.environmentId) in (_environmentId)\n| extend ['Legal entity'] = toupper(tostring(customDimensions.LegalEntity))\n| summarize count() by ['Legal entity']",
+      "id": "de96e459-312d-445b-92bc-e470d9c0c20e",
+      "usedVariables": [
+        "_endTime",
+        "_environmentId",
+        "_startTime"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "6f2edf23-11b6-48a1-ad15-81660c55ff77"
+      },
+      "text": "union pageViews, customEvents, exceptions\n| where timestamp > ago(7d)\n| extend EnvironmentId = tostring(customDimensions.environmentId)\n| where isnotempty(EnvironmentId)\n| distinct EnvironmentId\n| order by EnvironmentId asc",
+      "id": "8da33e9c-90fe-433a-a257-6cd37635f8d2",
+      "usedVariables": []
+    }
+  ]
+}
